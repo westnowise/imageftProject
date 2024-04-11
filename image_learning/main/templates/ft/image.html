@@ -1,0 +1,67 @@
+<!-- templates/index.html -->
+{%load static%}
+{% csrf_token %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcam</title>
+</head>
+<body>
+    <h1>Webcam Stream</h1>
+    <video id="webcam" autoplay></video>
+    <button id="captureBtn">Capture Image</button>
+    <img id="capturedImage" src="" alt="Captured Image">
+    <script src="{% static 'ft/js/image.js' %}"></script>
+</body>
+</html>
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Capture</title>
+</head>
+<body>
+    <video id="video" width="640" height="480" autoplay></video>
+    <form method="post" action="/capture/">
+        {% csrf_token %}
+    <button id="captureBtn">Capture Image</button>
+    </form>
+
+    <script>
+        const video = document.getElementById('video');
+
+        // 웹캠 스트림 가져오기
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(error => console.error('Error accessing webcam:', error));
+
+        const captureBtn = document.getElementById('captureBtn');
+        captureBtn.addEventListener('click', function () {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL('image/jpeg');
+
+            fetch('http://localhost:8080/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ image: imageData }),
+            })
+            .then(response => response.text())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error sending image to Unity:', error));
+        });
+    </script>
+</body>
+</html> {% endcomment %}
+
+
