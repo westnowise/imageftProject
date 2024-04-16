@@ -1,0 +1,40 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <!-- 비디오를 표시할 영역 -->
+        {% if user.is_authenticated %}
+            <h3>Welcome, {{ user.username }}</h3>
+            <video width="640" height="360" controls>
+                <source src="{% static 'img/Test_ft.mp4' %}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button id="popupButton">Show Popup</button>
+            <script src="{% static '/ft/js/video.js' %}"></script>
+
+            <h3><a href="{% url 'accounts:logout' %}">로그아웃</a></h3>
+            <h3><a href="/game">게임</a></h3>
+            <h3><a href="image">사진찍기</a></h3>
+            <!-- 사용자의 FairyTale 객체 정보 표시 -->
+            <h3>FairyTale 정보:</h3>
+            {% if user_fairytales %}
+                {% for fairy_tale in user_fairytales %}
+                    <p>Title: {{ fairy_tale.title }}</p>
+                    <img src="data:image/png;base64,{{ fairy_tale.base64_image}}" alt="{{ fairy_tale.title }}">
+                {% endfor %}
+            {% else %}
+                <p>NO</p>
+            {% endif %}
+
+        {% else %}
+            <h3><a href="{% url 'accounts:signup' %}">회원가입</a></h3>
+            <h3><a href="{% url 'accounts:login' %}">로그인</a></h3>
+        {% endif %}
+    </div>
+</body>
+</html>

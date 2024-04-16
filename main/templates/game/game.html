@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Display</title>
+    <style>
+        #image-container {
+            position: relative;
+            width: 1280px; /* 이미지 컨테이너의 너비 */
+            height: 720px; /* 이미지 컨테이너의 높이 */
+        }
+        #target-image {
+            position: absolute;
+            top: 160px; /* 목표 이미지의 상대적인 위치 */
+            left: 440px; /* 목표 이미지의 상대적인 위치 */
+            width: 400px; /* 목표 이미지의 너비 */
+            height: 400px; /* 목표 이미지의 높이 */
+            opacity: 0.5; /* 투명도 설정 */
+        }
+        .draggable-image {
+            position: absolute;
+            width: 150px; /* 드래그 가능한 이미지의 너비 */
+            height: 150px; /* 드래그 가능한 이미지의 높이 */
+            cursor: pointer; /* 커서 설정 */
+        }
+    </style>
+</head>
+<body>
+    <div id="image-container">
+        <!-- 이미지 및 목표 이미지를 표시할 영역입니다. -->
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'js/gane/game.js' %}"></script>
+</body>
+</html>
