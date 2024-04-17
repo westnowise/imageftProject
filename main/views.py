@@ -30,5 +30,4 @@ def index(request):
     
 
 def main(request):
-
     return render(request, 'main/main.html')

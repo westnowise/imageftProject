@@ -19,7 +19,7 @@ const searchInput = document.querySelector('.search-bar input[type="text"]');
 document.addEventListener('DOMContentLoaded', function() {
     // start.html로 이동하는 함수
     function redirectToStartPage() {
-        window.location.href = '/'; // start.html로 이동
+        window.location.href = '/main'; // start.html로 이동
     }
 
     // "fas fa-chevron-right" 아이콘을 클릭하면 redirectToStartPage 함수 실행
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     // start.html로 이동하는 함수
     function redirectToStartPage() {
-        window.location.href = '/';
+        window.location.href = '/main';
     }
 
     // "fas fa-shopping-bag" 아이콘을 클릭하면 redirectToStartPage 함수 실행

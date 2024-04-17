@@ -29,7 +29,7 @@
         {% if user.is_authenticated %}
             <!-- <h3>Welcome, {{ user.username }}</h3> -->
             <div style="display: flex; justify-content: center;">
-                <video controls>
+                <video id="myVideo" controls autoplay>
                     <source src="{% static 'img/ft1.mp4' %}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -42,7 +42,18 @@
             <h3><a href="{% url 'accounts:login' %}">로그인</a></h3>
         {% endif %}
     </div>
-    <script src="{% static '/ft/js/video.js' %}"></script>
+    <script>
+        window.onload = function() {
+            // 사용자가 인증되었을 때만 실행
+                var video = document.getElementById("myVideo");
+
+                // 비디오가 로드되면 자동으로 재생합니다.
+                video.addEventListener('loadedmetadata', function() {
+                    video.play();
+                });
+            
+        };
+    </script>
     <h3><a href="{% url 'accounts:logout' %}">로그아웃</a></h3>
     <h3><a href="/game">게임</a></h3>
     <h3><a href="image">사진찍기</a></h3>
