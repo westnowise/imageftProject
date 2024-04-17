@@ -1,5 +1,5 @@
-from django.http import JsonResponse  
-from django.shortcuts import render
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render, redirect
 from rembg import remove
 from PIL import Image
 from PIL import ImageEnhance
@@ -9,6 +9,7 @@ import tempfile
 import os
 from .models import FairyTale 
 import time
+from django.views.decorators.http import require_POST, require_GET
 
 # Create your views here.
 def index(request):
@@ -39,7 +40,7 @@ def capture_image(request):
         enhancer = ImageEnhance.Sharpness(output_image)
         output_image = enhancer.enhance(2.0)
 
-       # 배경이 제거된 이미지를 저장할 폴더 경로
+        # 배경이 제거된 이미지를 저장할 폴더 경로
         output_image_dir = r'C:\Users\user\Desktop\project\project1\static\img'
         # 저장할 이미지 파일의 이름
         output_image_filename = 'removed_bg_image.png'
@@ -56,13 +57,8 @@ def capture_image(request):
         with BytesIO() as output_buffer:
             output_image.save(output_buffer, format="PNG")
             image_binary = output_buffer.getvalue()
-
-        # FairyTale 모델을 사용하여 이미지 정보와 사용자 정보를 저장
-        fairy_tale = FairyTale.objects.create(
-            title='Captured Image',  # 이미지 제목 등 적절한 정보로 수정
-            image=image_binary,
-            user=request.user if request.user.is_authenticated else None  # 현재 로그인한 사용자 정보 사용
-        )
+        
+        base64_image = base64.b64encode(image_binary).decode('utf-8')
 
         # 클라이언트에게 전달할 이미지 경로
         image_url = '/static/img/' + output_image_filename
@@ -72,6 +68,32 @@ def capture_image(request):
             output_image.save(temp_file)
 
             # HTML 페이지에 이미지 경로 전달
-            return JsonResponse({'message': 'Image captured and background removed successfully.', 'image_url': image_url})
+            return JsonResponse({'message': 'Image captured and background removed successfully.', 'image_url': image_url, 'image_data': base64_image})
     else:
         return JsonResponse({'error': 'Invalid request method or image data missing.'}, status=400)
+
+def save_image(request):
+    if request.method == 'POST' and 'image_data' in request.POST:
+        image_data = request.POST.get('image_data')
+
+        if image_data:
+            image_binary = base64.b64decode(image_data.split(',')[1])
+
+            # 이미지 데이터를 BinaryField에 저장
+            fairy_tale = FairyTale.objects.create(
+                title='성냥팔이소녀',
+                image=image_binary,  # 이미지 데이터를 BinaryField에 직접 저장
+                user=request.user if request.user.is_authenticated else None
+            )
+            return redirect('/')
+        return JsonResponse({'error': 'Image data missing.'}, status=400)
+    
+    else:
+        output_image_filename = 'removed_bg_image.png'
+        image_url = 'static/img/' + output_image_filename
+
+        with open(image_url, 'rb') as image_file:
+            encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+        
+        context = {'encoded_string': encoded_string}
+        return render(request, 'ft/save.html', context)

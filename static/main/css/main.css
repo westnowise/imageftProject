@@ -1,0 +1,181 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: #F6CD00;
+    padding: 10px;
+    height: 15%;
+    text-align: center;
+    color: #fff;
+    border-bottom-left-radius: 50px; /* Rounded bottom left corner */
+    border-bottom-right-radius: 50px; /* Rounded bottom right corner */
+    /* box-shadow: 0px 14px 18px yellow; Yellow shadow */
+    position: relative;
+    
+}
+.backgd {
+    position: absolute;
+    background-color: yellow;
+    padding: 10px;
+    width: 98%;
+    height: 14%;
+    left: 10px;
+    text-align: center;
+    color: #fff;
+    border-bottom-left-radius: 50px; /* Rounded bottom left corner */
+    border-bottom-right-radius: 50px; /* Rounded bottom right corner */
+    z-index: -1; /* backgd 요소를 header 뒤에 겹치게 함 */
+}
+
+
+.header h1 {
+    font-size: 50px;
+    
+}
+
+.header i {
+    position: absolute;
+    top: 50%;
+    right: 100px;
+    
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 36px;
+    cursor: pointer;
+}
+
+
+.content {
+    height: 100%; /* Allows content to grow and fill remaining space */
+    overflow-y: auto;
+    display: grid; /* Change display property to grid */
+    grid-template-columns: repeat(2, 1fr); /* Arrange items in 2 columns */
+    grid-gap: 20px; /* Add gap between grid items */
+    padding: 50px; /* Padding for all sides */
+    
+}
+
+.item {
+    display: flex;
+    justify-content: space-between; /* Distribute items along the main axis */
+    align-items: center;
+    height: 300px;
+    padding: 50px;
+    border-radius: 25px;
+    color: #fff;
+    margin: 10px;
+    overflow: hidden;
+}
+
+.item:nth-child(1) {
+    background-color: #4960F9; /* 첫 번째 아이템 배경색 */
+}
+.item:nth-child(2) {
+    background-color: #FD79A8; /* 두 번째 아이템 배경색 */
+}
+.item:nth-child(3) {
+    background-color: #FF8C00; /* 세 번째 아이템 배경색 */
+}
+.item:nth-child(4) {
+    background-color: #FFD700; /* 네 번째 아이템 배경색 */
+}
+.item:nth-child(5) {
+    background-color: #FF5733; /* 다섯 번째 아이템 배경색 */
+}
+.item:nth-child(6) {
+    background-color: #58d85f; /* 네 번째 아이템 배경색 */
+}
+.item:nth-child(7) {
+    background-color: #941764; /* 다섯 번째 아이템 배경색 */
+}
+.item img{
+    width: 700px;
+    height: 500px; /* Maintain aspect ratio */
+    max-width: 60%; /* Limit image width to 100% of item width */
+    max-height: 300px; /* Set maximum height for the image */
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.text-container{
+    padding: auto;
+    text-align: left;
+    flex-grow: 1;
+}
+
+.text-container .tag {
+    font-weight: 200; /* Set font weight to thin */
+    font-size: 27px; /* Reduce font size */
+}
+
+
+
+.item p{
+    /* max-width: 35%; */
+    font-size: 40px; /* 텍스트 크기 */
+    font-weight: bold; 
+    text-align: left; /* Align text to the left */
+}
+
+
+.large-item {
+    grid-column: span 2; /* Make large-item span 2 columns */
+    display: flex;
+    align-items: center;
+    
+}
+
+.large-item img{
+    margin-right: 40px ;
+    
+}
+
+
+.large-item i {
+
+    color: #fff;
+    font-size: 50px;
+    cursor: pointer;
+}
+
+
+.search-bar {
+    background-color: #F6CD00; /* Background color */
+    padding: 30px; /* Padding */
+    height: 10%;
+    text-align: center;
+    border-top-left-radius: 20px; /* Rounded top left corner */
+    border-top-right-radius: 20px; /* Rounded top right corner */
+}
+
+input[type="text"] {
+    padding: 10px;
+    width: 70%;
+    height: 50%;
+    border-radius: 16px;
+    border: none;
+    outline: none;
+    font-family: "Font Awesome 5 Free"; /* 돋보기 아이콘 폰트 지정 */
+    font-size: 24px;
+    font-weight: 900;
+}
+
+input[type="submit"] {
+    height: auto;
+    padding: 10px 20px;
+    background-color: #6C5CE7;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 24px;
+}

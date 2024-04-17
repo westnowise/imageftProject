@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 버튼 클릭 시 이미지 캡처
     captureBtn.addEventListener('click', function () {
+        this.classList.add('hidden'); // 버튼 숨기기
         let counter = 10; // 카운트다운 시작 값
         countdownDisplay.textContent = counter; // 카운트다운 초기값 표시
         countdownDisplay.style.display = 'block'; // 카운트다운을 표시
@@ -68,6 +69,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     
                     // 이미지를 표시할 HTML 요소에 추가
                     document.body.appendChild(removedBgImage);
+
+                    // 이미지 전송 후 바로 /save/로 이동
+                    window.location.href = '/save/';
                 })
                 .catch(error => console.error('Error capturing image:', error));
             }

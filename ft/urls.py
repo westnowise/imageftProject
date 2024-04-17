@@ -6,4 +6,5 @@ from django.urls import path
 urlpatterns = [
     path('image/', views.index, name='image'),
     path('capture/', views.capture_image, name='capture_image'),
+    path('save/', views.save_image, name='save_image'),
 ]

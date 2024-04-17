@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 동화 이야기</title>
+    <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
+    <!-- 아이콘 깨짐(버전 문제인 것 같음) <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" integrity="sha512-u3fPA7V8qQmhBPNT5quvaXVa1mnnLSXUep5PS1qo5NRzHwG19aHmNJnj1Q8hpA/nBWZtZD4r4AX6YOt5ynLN2g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>나의 동화이야기</h1>
+            <i class="fas fa-shopping-bag"></i>
+            <!-- <a href="main" target="_blank"><i class="fas fa-shopping-bag"></i></a> -->
+        </div>
+        <div class="backgd">
+        </div>
+        <div class="content">
+            <div class="item large-item">
+                <img src= "{% static 'main/img/The Little Match Girl.png' %}" alt="Pig Image">
+                <div class="text-container">
+                    <p class="tag">#오늘의 추천</p>
+                    <p class="ft_title" id="item1">성냥팔이 소녀</p>
+                </div>
+                <i class="fas fa-chevron-right" ></i>
+
+            </div>
+            <div class="item">
+                <div class="text-container">
+                    <p class="tag">#유명한동화</p>
+                    <p class="ft_title" id="item1">아기돼지 삼형제</p>
+                </div>
+                <img src= "{% static 'main/img/three little pigs.png' %}" alt="Pig Image">
+            </div>
+            <div class="item">
+                <div class="text-container">
+                    <p class="tag">#신작</p>
+                    <p class="ft_title" id="item1">늑대와 아이</p>
+                </div>
+                <img src= "{% static 'main/img/wolf and child.png' %}" alt="Pig Image">
+            </div>
+            <div class="item">
+                <div class="text-container">
+                    <p class="tag">#한국동화</p>
+                    <p class="ft_title" id="item1">해와 달이 된 오누이</p>
+                </div>
+                <img src= "{% static 'main/img/Brother and sister who became the sun and moon.jpg' %}" alt="Pig Image">
+            </div>
+            <div class="item">
+                <div class="text-container">
+                    <p class="tag">#유명한동화</p>
+                    <p class="ft_title" id="item1">행복한 왕자</p>
+                </div>
+                <img src= "{% static 'main/img/The Happy Prince.jpg' %}" alt="Pig Image">
+            </div>
+            <div class="item">
+                <div class="text-container">
+                    <p class="tag">#한국동화</p>
+                    <p class="ft_title" id="item1">아기장수 우투리</p>
+                </div>
+                <img src= "{% static 'main/img/baby general.jpg' %}"alt="Pig Image">
+            </div>
+            <div class="item">
+                <div class="text-container">
+                    <p class="tag">#유명한동화</p>
+                    <p class="ft_title" id="item1">헨젤과 그래텔</p>
+                </div> 
+                <img src= "{% static 'main/img/Hansel and Gretel.jpg' %}"alt="Pig Image">
+            </div>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="   &#xf002;   동화 제목을 입력해주세요.">
+            <input type="submit" value="검색">
+        </div>
+    </div>
+    <script src="{% static 'main/js/main.js' %}"></script>
+</body>
+</html>

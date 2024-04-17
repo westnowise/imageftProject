@@ -10,8 +10,11 @@
     <style>
         #webcamContainer {
             position: relative;
-            width: 640px; /* 웹캠 화면 너비 */
-            height: 480px; /* 웹캠 화면 높이 */
+            display: flex;
+            width: 100%;
+            /* 웹캠 화면 너비 */
+            height: 100%;   /* 웹캠 화면 높이 */
+            left:10px;
         }
         #webcam {
             position: absolute;
@@ -20,39 +23,43 @@
         }
         #overlayImage {
             position: absolute;
-            top: 30px; /* 이미지 상단 위치 조정 */
-            left: 20px; /* 이미지 왼쪽 위치 조정 */
+            top: 100px; /* 이미지 상단 위치 조정 */
+            left: 450px; /* 이미지 왼쪽 위치 조정 */
             /* 원하는 크기와 스타일을 설정하세요 */
+            width: 1000px; /* 이미지 너비 조정 */
+            height: auto; /* 이미지 높이 자동 조정 */
         }
         #captureBtn {
             position: absolute;
-            bottom: 20px; /* 버튼 하단 위치 조정 */
+            /* bottom: 10px; 버튼 하단 위치 조정 */
             left: calc(50% - 50px); /* 버튼 가운데 위치 조정 */
+            top: calc(50% - 50px);
             width: 100px;
-            height: 40px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
+            height: 100px;
             cursor: pointer;
-            font-size: 16px;
-        }
+        }        
     </style>
 </head>
 <body>
-    <h1>Webcam Stream</h1>
-    {% if username %}
+    <!-- {% if username %}
     <p>Welcome, {{ username }}</p>
     {% else %}
     <p>Welcome, Guest</p>
-    {% endif %}
+    {% endif %} -->
     <div id="webcamContainer">
         <video id="webcam" autoplay></video>
         <img id="overlayImage" src="{% static 'ft/img/yellowsquare.png' %}" alt="Overlay Image">
-        <span id="countdown" style="display: none; font-size: 20px; position: absolute; top: 10px; left: 10px; color: white; background-color: rgba(0,0,0,0.5); padding: 5px;">10</span>
-        <button id="captureBtn">Capture Image</button>
+        <span id="countdown" style="display: none; font-size: 50px; position: absolute; top: calc(50% - 50px); left: calc(50% - 25px); color: rgb(249, 220, 0); ">10</span>
+        <!-- <button id="captureBtn">Capture Image</button> -->
+        <img id="captureBtn" src="{% static 'ft/img/button.png' %}" alt="Capture Button" onclick="hideButton()">
     </div>
-    <img id="capturedImage" src="" alt="Captured Image">
+    <img id="capturedImage" src="" alt="Captured Image" style="display: none;">
     <script src="{% static 'ft/js/image.js' %}"></script>
+
+    <script>
+        function hideButton() {
+            document.getElementById('captureBtn').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
