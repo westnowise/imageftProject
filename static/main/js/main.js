@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.fas.fa-chevron-right').addEventListener('click', redirectToStartPage);
 });
 
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // start.html로 이동하는 함수
     function redirectToStartPage() {

@@ -29,6 +29,8 @@
 <body>
     <!-- <h1>Saved Image</h1> -->
     <!-- 이미지 표시 -->
+    <p>Next Page: {{ next_page }}</p>
+    <div id="jsonResponse"></div>
     <img id="savedImage" src="data:image/png;base64,{{ encoded_string }}" alt="Saved Image" style="width: 80%; display: block; margin: 0 auto; margin-top: 0;">
     
     <div id="buttonContainer">
@@ -39,6 +41,7 @@
             {% csrf_token %}
             <!-- 숨겨진 입력 필드 -->
             <input type="hidden" name="image_data" id="image_data">
+            <input type="hidden" name="next_page" value="{{ next_page }}">
             <!-- <button type="submit" onclick="copyImageData()">Save Image</button> -->
             <img src="{% static 'ft/img/button2.png' %}" alt="Save Image" onclick="copyImageData();" style="width: 200px;">
         </form>

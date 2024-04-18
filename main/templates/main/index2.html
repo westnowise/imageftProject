@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #videoContainer {
+            position: relative;
+        }
+        #videoContainer video {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: 0 auto; /* 수평 가운데 정렬 */
+        }
+        #videoControls {
+            position: absolute;
+            top: 0;
+            left: 350px;
+            top: 20px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- <button class="enterFullscreenBtn">Fullscreen</button> -->
+    <div id="videoContainer">
+        <!-- 비디오를 표시할 영역 -->
+        {% if user.is_authenticated %}
+            <!-- <h3>Welcome, {{ user.username }}</h3> -->
+            <div style="display: flex; justify-content: center;">
+                <video id="myVideo" autoplay>
+                    <source src="{% static 'img/ft8.mp4' %}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div id="videoControls">
+                <img id="persistentButton" src="{% static '/img/video/back.png' %}" style="width: 50px; height: 50px;">
+            </div>
+
+        {% else %}
+            <h3><a href="{% url 'accounts:signup' %}">회원가입</a></h3>
+            <h3><a href="{% url 'accounts:login' %}">로그인</a></h3>
+        {% endif %}
+    </div>
+    <script>
+        window.onload = function() {
+            var video = document.getElementById("myVideo");
+
+            // 비디오가 로드되면 자동으로 재생합니다.
+            video.addEventListener('loadedmetadata', function() {
+                video.play();
+            });
+
+            // 비디오의 특정 지점에서 URL로 이동합니다.
+            video.addEventListener('timeupdate', function() {
+                var currentTime = video.currentTime;
+                // 원하는 지점에서 URL로 이동
+                if (currentTime > 1 && currentTime < 1.4) { // 예: 비디오 재생 시간 5초에서 10초 사이
+                    window.location.href = '/game';
+                }
+            });
+
+        };
+    </script>
+</body>
+</html>

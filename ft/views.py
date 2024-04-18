@@ -8,20 +8,23 @@ import base64
 import tempfile
 import os
 from .models import FairyTale 
-import time
 from django.views.decorators.http import require_POST, require_GET
 
 # Create your views here.
 def index(request):
-
+    next_page = request.POST.get('next_page', '/default/')
     # 사용자 이름을 템플릿 컨텍스트에 추가합니다.
     context = {
-        'username': request.user.username if request.user.is_authenticated else None
+        'username': request.user.username if request.user.is_authenticated else None,
+        'next_page': next_page,
     }
     return render(request,'ft/image.html', context)
 
 def capture_image(request):
-    if request.method == 'POST' and 'image' in request.POST:
+    if request.method == 'POST':
+        next_page =  request.POST.get('next_page', '/default/')
+        
+        # next_page = request.POST.get('next_page', '/default/')
         # 캡처한 이미지 받아오기
         image_data = request.POST['image']
         # 이미지를 파일로 저장
@@ -67,14 +70,15 @@ def capture_image(request):
         with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as temp_file:
             output_image.save(temp_file)
 
-            # HTML 페이지에 이미지 경로 전달
-            return JsonResponse({'message': 'Image captured and background removed successfully.', 'image_url': image_url, 'image_data': base64_image})
+        # HTML 페이지에 이미지 경로 전달
+        return JsonResponse({'message': 'Image captured and background removed successfully.', 'image_url': image_url, 'image_data': base64_image, 'next_page': next_page})
     else:
         return JsonResponse({'error': 'Invalid request method or image data missing.'}, status=400)
 
 def save_image(request):
     if request.method == 'POST' and 'image_data' in request.POST:
         image_data = request.POST.get('image_data')
+        next_page = request.POST.get('next_page')
 
         if image_data:
             image_binary = base64.b64decode(image_data.split(',')[1])
@@ -85,15 +89,22 @@ def save_image(request):
                 image=image_binary,  # 이미지 데이터를 BinaryField에 직접 저장
                 user=request.user if request.user.is_authenticated else None
             )
-            return redirect('/')
+            context = {'next_page': next_page}
+            redirect_url = next_page
+
+            return redirect(redirect_url)
+        
         return JsonResponse({'error': 'Image data missing.'}, status=400)
     
     else:
         output_image_filename = 'removed_bg_image.png'
         image_url = 'static/img/' + output_image_filename
 
+        next_page = request.GET.get('next_page')
+
         with open(image_url, 'rb') as image_file:
             encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
         
-        context = {'encoded_string': encoded_string}
+        context = {'encoded_string': encoded_string, 'next_page': next_page}
+        # return JsonResponse({'encoded_string': encoded_string, 'next_page': next_page} )
         return render(request, 'ft/save.html', context)

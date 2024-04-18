@@ -2,9 +2,9 @@ from django.shortcuts import render
 from ft.models import FairyTale 
 import base64
 import cv2
-import pygame
-from pygame.locals import *
 
+def main(request):
+    return render(request, 'main/main.html')
 
 # Create your views here.
 def index(request):
@@ -20,14 +20,20 @@ def index(request):
 
         # 템플릿에 전달할 컨텍스트 데이터
         context = {
-            'user_fairytales': user_fairytales
+            'user_fairytales': user_fairytales,
+            'next_page': 'main2'
         }
 
         return render(request, 'main/index.html', context)
     else:
-
         return render(request, 'main/index.html')
-    
 
-def main(request):
-    return render(request, 'main/main.html')
+def main2(request):
+    return render(request, 'main/index2.html')
+
+def main3(request):
+    context = {'next_page': 'main4/'}
+    return render(request, 'main/index3.html', context)
+
+def main4(request):
+    return render(request, 'main/index4.html')

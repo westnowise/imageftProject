@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const captureBtn = document.getElementById('captureBtn');
     const capturedImage = document.getElementById('capturedImage');
     const countdownDisplay = document.getElementById('countdown');
+    const nextPageInput = document.getElementById('nextPageInput');
 
     let stream;
 
@@ -49,7 +50,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 // 이미지 서버로 전송 (폼 데이터로 전송)
                 const formData = new FormData();
                 formData.append('image', canvas.toDataURL('image/jpeg'));
-                
+                formData.append('next_page', nextPageInput.value); 
+                // formData.append('image', canvas.toDataURL('image/jpeg'));
+
                 fetch('/capture/', {
                     method: 'POST',
                     headers: {
@@ -59,19 +62,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(response => response.json())
                 .then(data => {
-                    // 서버로부터의 응답에서 배경이 제거된 이미지의 URL을 추출
-                    const removedBgImageUrl = data.image_url;
-                    
-                    // 이미지를 표시할 <img> 요소 생성
-                    const removedBgImage = document.createElement('img');
-                    removedBgImage.src = removedBgImageUrl;
-                    removedBgImage.classList.add('removed-bg-image'); // 클래스 추가
-                    
-                    // 이미지를 표시할 HTML 요소에 추가
-                    document.body.appendChild(removedBgImage);
-
-                    // 이미지 전송 후 바로 /save/로 이동
-                    window.location.href = '/save/';
+                    const nextPage = data.next_page
+                    window.location.href = `/save/?next_page=${encodeURIComponent(nextPage)}`;
                 })
                 .catch(error => console.error('Error capturing image:', error));
             }

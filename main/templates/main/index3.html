@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #videoContainer {
+            position: relative;
+        }
+        #videoContainer video {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: 0 auto; /* 수평 가운데 정렬 */
+        }
+        #videoControls {
+            position: absolute;
+            top: 0;
+            left: 350px;
+            top: 20px;
+            z-index: 1;
+        }
+        #drawControls {
+            position: absolute;
+            top: 0;
+            left: 1200px;
+            top: 700px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- <button class="enterFullscreenBtn">Fullscreen</button> -->
+    <div id="videoContainer">
+        <!-- 비디오를 표시할 영역 -->
+        <input type="hidden" name="next_page" value="{{ next_page }}">
+        {{ next_page }}
+        {% if user.is_authenticated %}
+            <!-- <h3>Welcome, {{ user.username }}</h3> -->
+            <div style="display: flex; justify-content: center;">
+                <video id="myVideo" autoplay>
+                    <source src="{% static 'img/ft10_12.mp4' %}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div id="videoControls">
+                <img id="persistentButton" src="{% static '/img/video/back.png' %}" style="width: 50px; height: 50px;">
+            </div>
+            <div id="drawControls">
+                <!-- <img id="persistentButton" src="{% static '/img/video/back.png' %}" style="width: 50px; height: 50px;"> -->
+            </div>
+        {% else %}
+            <h3><a href="{% url 'accounts:signup' %}">회원가입</a></h3>
+            <h3><a href="{% url 'accounts:login' %}">로그인</a></h3>
+        {% endif %}
+    </div>
+    <script>
+        window.onload = function() {
+            var video = document.getElementById("myVideo");
+
+            // 비디오가 로드되면 자동으로 재생합니다.
+            video.addEventListener('loadedmetadata', function() {
+                video.play();
+            });
+
+            // 비디오의 특정 지점에서 버튼을 추가합니다.
+            video.addEventListener('timeupdate', function() {
+                var currentTime = video.currentTime;
+                // 원하는 지점에서 이미지 버튼 추가
+                if (currentTime > 5 && currentTime < 5.4) { // 예: 비디오 재생 시간 5초에서 10초 사이
+                    var existingButton = document.getElementById("imageButton");
+                    if (!existingButton) { // 이미지 버튼이 없으면 새로 추가
+                        addImageButton();
+                    }
+                }
+            });
+
+            
+            // 이미지 버튼을 추가하는 함수
+            function addImageButton() {
+                var existingButton = document.getElementById("imageButton");
+                if (!existingButton) { // 이미지 버튼이 없으면 새로 추가
+                    var drawControls = document.getElementById("drawControls");
+                    var imageButton = document.createElement("img");
+                    imageButton.src = "{% static '/img/video/draw.png' %}";
+                    imageButton.style.width = "200px";
+                    imageButton.style.height = "80px";
+                    imageButton.id = "imageButton";
+
+                    imageButton.addEventListener('click', function() {
+                        var next_page = document.querySelector('input[name="next_page"]').value;
+                        // form 엘리먼트 생성
+                        var form = document.createElement('form');
+                        form.method = 'post';
+                        form.action = '/image/';
+
+                        // hidden input 엘리먼트 생성하고 값을 설정
+                        var next_page_input = document.createElement('input');
+                        next_page_input.type = 'hidden';
+                        next_page_input.name = 'next_page';
+                        next_page_input.value = next_page;
+
+                        // CSRF 토큰을 설정
+                        var csrftoken_input = document.createElement('input');
+                        csrftoken_input.type = 'hidden';
+                        csrftoken_input.name = 'csrfmiddlewaretoken';
+                        csrftoken_input.value = getCookie('csrftoken');
+
+                        // form에 hidden input 추가
+                        form.appendChild(next_page_input);
+                        form.appendChild(csrftoken_input);
+
+                        // body에 form 추가하고 submit
+                        document.body.appendChild(form);
+                        form.submit();
+                    });
+                    drawControls.appendChild(imageButton);
+            }}
+
+            // CSRF 토큰을 가져오는 함수
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        // 이름이 일치하는 쿠키를 찾음
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        };
+    </script>
+</body>
+</html>

@@ -23,10 +23,10 @@
         }
         #overlayImage {
             position: absolute;
-            top: 100px; /* 이미지 상단 위치 조정 */
-            left: 450px; /* 이미지 왼쪽 위치 조정 */
+            top: 95px; /* 이미지 상단 위치 조정 */
+            left: 240px; /* 이미지 왼쪽 위치 조정 */
             /* 원하는 크기와 스타일을 설정하세요 */
-            width: 1000px; /* 이미지 너비 조정 */
+            width: 950px; /* 이미지 너비 조정 */
             height: auto; /* 이미지 높이 자동 조정 */
         }
         #captureBtn {
@@ -46,20 +46,25 @@
     {% else %}
     <p>Welcome, Guest</p>
     {% endif %} -->
+    <p>Next Page: {{ next_page }}</p>
     <div id="webcamContainer">
         <video id="webcam" autoplay></video>
+        <input id="nextPageInput" type="hidden" name="next_page" value="{{ next_page }}">
         <img id="overlayImage" src="{% static 'ft/img/yellowsquare.png' %}" alt="Overlay Image">
         <span id="countdown" style="display: none; font-size: 50px; position: absolute; top: calc(50% - 50px); left: calc(50% - 25px); color: rgb(249, 220, 0); ">10</span>
         <!-- <button id="captureBtn">Capture Image</button> -->
         <img id="captureBtn" src="{% static 'ft/img/button.png' %}" alt="Capture Button" onclick="hideButton()">
     </div>
-    <img id="capturedImage" src="" alt="Captured Image" style="display: none;">
+    <div style="display: none;">
+        <img id="capturedImage" src="" alt="Captured Image">
+    </div>
     <script src="{% static 'ft/js/image.js' %}"></script>
 
     <script>
         function hideButton() {
             document.getElementById('captureBtn').style.display = 'none';
         }
+        
     </script>
 </body>
 </html>

@@ -60,9 +60,15 @@ def index(request):
     cap.set(4, frame_height)
     detector = HandDetector(detectionCon=0.8)
 
-    # 창 생성 및 전체 화면 설정
+    # 창 생성 및 위치 조정
     cv2.namedWindow("Interactive Display", cv2.WINDOW_NORMAL)
+    cv2.moveWindow("Interactive Display", 0, 0)  # 창을 좌상단으로 이동
+
+    # 창 전체 화면으로 설정
     cv2.setWindowProperty("Interactive Display", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+
+    # cv2.namedWindow("Interactive Display", cv2.WINDOW_NORMAL)
+    # cv2.setWindowProperty("Interactive Display", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 
     # 오디오 재생 함수
     def play_audio(sound_path):
@@ -303,7 +309,7 @@ def index(request):
     cap.release()
     cv2.destroyAllWindows()
 
-    return render(request, 'main/index.html', {
+    return render(request, 'main/index3.html', {
         'listImg': listImg,
         'target_pos': target_pos,
         'target_size': target_size,
