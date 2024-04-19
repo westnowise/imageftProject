@@ -124,7 +124,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 # STATIC_ROOT = '/srv/imageftProject/static/'
-STATICFILES_DIRS = [
+STATIC_ROOT = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
