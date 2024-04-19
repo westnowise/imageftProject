@@ -13,9 +13,11 @@ import threading
 
 # 최상단에 pygame 초기화
 pygame.init()
-pygame.mixer.init()
+# pygame.mixer.init()
 
 logger = logging.getLogger(__name__)
+#pygame.mixer.init(driver='directsound') 
+#os.environ["SDL_AUDIODRIVER"] = "alsa"
 
 def index(request):
 

@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-wop7c$4+#0s7r--vxj2+@ko*(6cj_bw4$i0nw@e1@_8p85@a89
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    ".compute-1.amazonaws.com"
+]
 
 
 # Application definition
@@ -130,3 +132,5 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+os.environ["SDL_AUDIODRIVER"] = "alsa"
