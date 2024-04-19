@@ -17,8 +17,8 @@
         #videoControls {
             position: absolute;
             top: 0;
-            left: 350px;
-            top: 20px;
+            /* left: 350px;
+            top:20px; */
             z-index: 1;
         }
         #drawControls {
@@ -28,17 +28,54 @@
             top: 700px;
             z-index: 1;
         }
+        #modalImage {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* 모달1 스타일 */
+        .modal1 {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            left: 50%;
+            top: 50%;
+            width: 200px;
+            height: 200px;
+            transform: translate(-50%, -50%);
+        }
+        /* 모달2 스타일 */
+        .modal2 {
+            display: none;
+            position: fixed;
+            z-index: 3;
+            left: 20%;
+            top: 55%;
+            width: 40px;
+            height: 40px;
+            transform: translate(-50%, -50%);
+        }
+
+        /* 모달3 스타일 */
+        .modal3 {
+            display: none;
+            position: fixed;
+            z-index: 3;
+            left: 90%;
+            top: 55%;
+            width: 40px;
+            height: 40px;
+            transform: translate(-50%, -50%);
+        }
+
     </style>
 </head>
 <body>
-    <!-- <button class="enterFullscreenBtn">Fullscreen</button> -->
     <div id="videoContainer">
-
         <input type="hidden" name="next_page" value="{{ next_page }}">
         {{ next_page }}
         <!-- 비디오를 표시할 영역 -->
         {% if user.is_authenticated %}
-            <!-- <h3>Welcome, {{ user.username }}</h3> -->
             <div style="display: flex; justify-content: center;">
                 <video id="myVideo" autoplay>
                     <source src="{% static 'img/ft1.mp4' %}" type="video/mp4">
@@ -46,7 +83,9 @@
                 </video>
             </div>
             <div id="videoControls">
-                <img id="persistentButton" src="{% static '/img/video/back.png' %}" style="width: 50px; height: 50px;">
+                <button id="popupButton" style="background: none; border: none; cursor: pointer;">
+                    <img id="persistentButton" src="{% static '/img/video/back.png' %}" style="width: 50px; height: 50px;">
+                </button>
             </div>
             <div id="drawControls">
                 <!-- <img id="persistentButton" src="{% static '/img/video/back.png' %}" style="width: 50px; height: 50px;"> -->
@@ -56,6 +95,20 @@
             <h3><a href="{% url 'accounts:login' %}">로그인</a></h3>
         {% endif %}
     </div>
+
+    <!-- 모달창 -->
+    <div id="myModalContainer">
+        <div id="myModal1" class="modal modal1">
+            <img id="modalImage1" src="" alt="Popup Image">
+        </div>
+        <div id="myModal2" class="modal modal2">
+            <img id="modalImage2" src="" alt="Popup Image">
+        </div>
+        <div id="myModal3" class="modal modal3">
+            <img id="modalImage3" src="" alt="Popup Image">
+        </div>
+    </div>
+
     <script>
         window.onload = function() {
             var video = document.getElementById("myVideo");
@@ -64,6 +117,22 @@
             video.addEventListener('loadedmetadata', function() {
                 video.play();
             });
+
+            // 창 크기가 변경될 때 모달의 위치와 크기를 조절합니다.
+            window.addEventListener('resize', function() {
+                adjustModalPosition();
+            });
+
+            // 버튼 클릭 이벤트 리스너
+            document.getElementById('popupButton').addEventListener('click', function () {
+                video.pause();
+                showModal1Image();
+                showModal2Image();
+                showModal3Image();
+            });
+
+            // 초기에 모달의 위치와 크기를 조절합니다.
+            adjustModalPosition();
 
             // 비디오의 특정 지점에서 버튼을 추가합니다.
             video.addEventListener('timeupdate', function() {
@@ -76,6 +145,11 @@
                     }
                 }
             });
+
+            // 모달 창을 닫는 함수
+            function closeModal(modal) {
+                modal.style.display = "none";
+            }
 
             // 이미지 버튼을 추가하는 함수
             function addImageButton() {
@@ -134,7 +208,79 @@
                 }
                 return cookieValue;
             }
+
+            // 모달의 위치와 크기를 조절하는 함수
+        function adjustModalPosition() {
+            var modal1 = document.getElementById("myModal1");
+            var modal2 = document.getElementById("myModal2");
+            var modal3 = document.getElementById("myModal3");
+
+            // 창의 크기에 따라 모달1의 위치와 크기를 조절합니다.
+            var screenWidth = window.innerWidth;
+            var screenHeight = window.innerHeight;
+
+            var modal1Width = 200;
+            var modal1Height = 200;
+            var modal1Left = (screenWidth - modal1Width) / 2;
+            var modal1Top = (screenHeight - modal1Height) / 2;
+
+            modal1.style.left = modal1Left + "px";
+            modal1.style.top = modal1Top + "px";
+
+            // 모달2의 위치를 모달1을 기준으로 조절합니다.
+            var modal2Left = modal1Left;
+            var modal2Top = modal1Top + (modal1Height * 0.2);
+
+            modal2.style.left = modal2Left + "px";
+            modal2.style.top = modal2Top + "px";
+
+            // 모달3의 위치를 모달1을 기준으로 조절합니다.
+            var modal3Left = modal1Left + (modal1Width * 4 / 5);
+            var modal3Top = modal2Top;
+
+            modal3.style.left = modal3Left + "px";
+            modal3.style.top = modal3Top + "px";
+        }
+
+        // 모달 1창에 이미지를 추가하고 모달 창을 표시하는 함수
+        function showModal1Image() {
+            var modal1 = document.getElementById("myModal1");
+            var modalImage1 = document.getElementById("modalImage1");
+            modal1.style.display = "flex";
+            modalImage1.src = "{% static 'ft/img/popup3_1.png' %}"; // 사용자가 원하는 이미지 경로로 변경
+        }
+
+        // 모달2 창에 이미지를 추가하고 모달 창을 표시하는 함수
+        function showModal2Image() {
+            var modal2 = document.getElementById("myModal2");
+            var modalImage2 = document.getElementById("modalImage2");
+            modal2.style.display = "flex";
+            modalImage2.src = "{% static 'ft/img/popup3_2.png' %}"; // 사용자가 원하는 이미지 경로로 변경
+            modal2.addEventListener('click', function() {
+                window.location.href = '/';
+            });
         };
+
+
+        // 모달3 창에 이미지를 추가하고 모달 창을 표시하는 함수
+        function showModal3Image() {
+            var video = document.getElementById("myVideo");
+            var modal1 = document.getElementById("myModal1");
+            var modal2 = document.getElementById("myModal2");
+            var modal3 = document.getElementById("myModal3");
+            var modalImage3 = document.getElementById("modalImage3");
+
+            modal3.style.display = "flex";
+            modalImage3.src = "{% static 'ft/img/popup3_3.png' %}"; // 사용자가 원하는 이미지 경로로 변경
+            modal3.addEventListener('click', function () {
+                // 각 모달을 닫는 함수를 호출하여 모달 이미지를 닫습니다.
+                closeModal(modal1);
+                closeModal(modal2);
+                closeModal(modal3);
+                video.play();
+            });
+        };
+    }
     </script>
 </body>
 </html>
