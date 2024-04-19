@@ -8,7 +8,7 @@ import base64
 import tempfile
 import os
 from .models import FairyTale 
-from django.views.decorators.http import require_POST, require_GET
+from django.conf import settings
 
 # Create your views here.
 def index(request):
@@ -44,14 +44,16 @@ def capture_image(request):
         output_image = enhancer.enhance(2.0)
 
         # 배경이 제거된 이미지를 저장할 폴더 경로
-        output_image_dir = r'C:\Users\user\Desktop\project\project1\static\img'
+        static_dir = settings.STATIC_ROOT or settings.STATICFILES_DIRS[0]
+        output_image_path = os.path.join(static_dir, 'img/removed_bg_image.png')
+        # output_image_dir = settings.STATIC_ROOT
         # 저장할 이미지 파일의 이름
-        output_image_filename = 'removed_bg_image.png'
+        output_image_filename = 'img/removed_bg_image.png'
         # 저장할 이미지 파일의 전체 경로
-        output_image_path = os.path.join(output_image_dir, output_image_filename)
+        # output_image_path = os.path.join(output_image_dir, output_image_filename)
 
         # 폴더가 없으면 생성
-        os.makedirs(output_image_dir, exist_ok=True)
+        os.makedirs(static_dir, exist_ok=True)
 
         # 배경이 제거된 이미지를 저장
         output_image.save(output_image_path)
