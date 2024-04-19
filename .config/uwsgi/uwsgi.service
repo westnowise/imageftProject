@@ -3,7 +3,7 @@ Description=uWSGI service
 After=syslog.target
 
 [Service]
-ExecStart=/home/ubuntu/myvenv/bin/uwsgi -i /srv/project1/.config/uwsgi/project1.ini
+ExecStart=/home/ubuntu/myvenv/bin/uwsgi -i /srv/imageftProject/.config/uwsgi/project1.ini
 
 Restart=always
 KillSignal=SIGQUIT
