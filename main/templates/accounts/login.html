@@ -1,17 +1,97 @@
-<div class="wrapper">
-    <div style="text-align: center;">
-        <h1>로그인</h1>
-        <form method="POST">
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 나의 동화 이야기 로그인 </title>
+    <style>
+        body {
+            /* 배경이미지 */
+            background-image: url("{% static 'accounts/img/background_2.png' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        #login-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .login-text,
+        .start-button,
+        .join-button,
+        .username,
+        .password {
+            position: relative;
+            margin: 20px auto;
+            width: 600px;
+            height: 100px;
+        }
+        .login-text {
+            color: rgb(117,81,24);
+            font-size: 50px;
+            font-weight: 900;
+        }
+        .start-button {
+            text-align: center; /* 수평으로 가운데 정렬 */
+            align-items: center; /* 수직으로 가운데 정렬 */
+            border-radius: 50px; /* 모서리 둥글게 설정 */
+            box-shadow: 0 0 10px;
+            border: solid 5px rgb(250,212,62);
+            background: rgb(250,212,62);
+            color: rgb(117,81,24);
+            font-size: 50px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+        .join-button {
+            color: rgb(117,81,24);
+            font-size: 30px;
+            font-weight: 900;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        input {
+            text-align: center; /* 텍스트를 수평으로 가운데 정렬 */
+            border: solid 5px rgb(117,81,24);
+            background: white;
+            border-radius: 30px; /* 모서리를 10px만큼 둥글게 설정 */
+            font-size: 30px; /* 가독성을 위한 큰 글꼴 크기 */
+        }
+        input::placeholder {
+            color: rgb(117,81,24);
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="login-container">
+        <div class="login-text" style="display: flex; justify-content: center;">로그인</div>
+        <form method="POST" action="{% url 'accounts:login' %}">
             {% csrf_token %}
-            아이디:
+            <input type="text" class="username" name="username" placeholder="아이디" style="display: flex; justify-content: center;">
+            <input type="password" class="password" name="password" placeholder="비밀번호" style="display: flex; justify-content: center;">
             <br>
-            <input name="username" type="text">
-            <br>
-            비밀번호:
-            <br>
-            <input name="password" type="password">
-            <br><br>
-            <input type="submit" class="btn btn-primary" value="Login">
+            <button type="submit" class="start-button" name="login" style="display: flex; justify-content: center;">시작하기</button>
         </form>
+        <div class="join-button" style="display: flex; justify-content: center;">회원가입</div>
     </div>
-</div>
+    <!-- 뒤로 가기 버튼 -->
+    <img id="backButton" src="{% static 'accounts/img/back.png' %}" style="width: 100px; height: 100px; position: fixed; top: 20px; left: 20px; cursor: pointer;">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var joinButton = document.querySelector('.join-button');
+            joinButton.addEventListener('click', function() {
+                window.location.href = '/accounts/signup/';
+            });
+        });
+        
+        // 뒤로 가기 버튼 클릭 시 동작
+        document.getElementById('backButton').addEventListener('click', function () {
+                window.location.href = '/accounts/start/';
+        });
+    </script>
+</body>
+</html>

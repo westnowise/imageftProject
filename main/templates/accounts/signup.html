@@ -1,20 +1,84 @@
-<!-- accounts/templates/signup.html -->
-<div class="wrapper" style="text-align: center;">
-    <h1>회원가입</h1>
-    <form method="POST">
-        {% csrf_token %}
-        아이디: <br>
-        <input name="username" type="text">
-        <br>
-        비밀번호: <br>
-        <input name="password1" type="password">
-        <br>
-        비밀번호 확인: <br>
-        <input name="password2" type="password">
-        <br>
-        이메일: <br>
-        <input name="email" type="email">
-        <br><br>
-        <input type="submit" class="btn btn-primary" value="Sign Up">
-    </form>
-</div>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 나의 동화 이야기 회원가입 </title>
+    <style>
+        body {
+            /* 배경이미지 */
+            background-image: url("{% static 'accounts/img/background_2.png' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        #join-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .join-text,
+        .signup-button,
+        .username,
+        .password1,
+        .password2,
+        .email {
+            position: relative;
+            margin: 10px auto;
+            width: 600px;
+            height: 100px;
+        }
+        .join-text {
+            color: rgb(117,81,24);
+            font-size: 50px;
+            font-weight: 900;
+        }
+        .signup-button {
+            text-align: center; /* 수평으로 가운데 정렬 */
+            align-items: center; /* 수직으로 가운데 정렬 */
+            border-radius: 50px; /* 모서리 둥글게 설정 */
+            box-shadow: 0 0 10px;
+            border: solid 5px rgb(250,212,62);
+            background: rgb(250,212,62);
+            color: rgb(117,81,24);
+            font-size: 50px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+        input {
+            text-align: center; /* 텍스트 가운데 정렬 */
+            border: solid 5px rgb(117,81,24);
+            background: white;
+            border-radius: 30px; /* 모서리 둥글게 설정 */
+            font-size: 30px;
+        }
+        input::placeholder {
+            color: rgb(117,81,24);
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="join-container">
+        <div class="join-text" style="display: flex; justify-content: center;">회원 가입</div>
+        <form method="POST" action="{% url 'accounts:signup' %}">
+            {% csrf_token %}
+            <input type="text" class="username" name="username" placeholder="아이디" style="display: flex; justify-content: center;">
+            <input type="password" class="password1" name="password1" placeholder="비밀번호" style="display: flex; justify-content: center;">
+            <input type="password" class="password2" name="password2" placeholder="비밀번호 확인" style="display: flex; justify-content: center;">
+            <input type="email" class="email" name="email" placeholder="이메일" style="display: flex; justify-content: center;">
+            <button type="submit" class="signup-button" name="signup">가입하기</button>
+        </form>
+    </div>
+    <!-- 뒤로 가기 버튼 -->
+    <img id="backButton" src="{% static 'accounts/img/back.png' %}" style="width: 100px; height: 100px; position: fixed; top: 20px; left: 20px; cursor: pointer;">
+    <script>
+        // 뒤로 가기 버튼 클릭 시 동작
+        document.getElementById('backButton').addEventListener('click', function () {
+            window.location.href = '/accounts/login/';
+        });
+    </script>
+</body>
+</html>

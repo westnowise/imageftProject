@@ -5,6 +5,9 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 
+def start(request):
+    return render(request, 'accounts/start.html')
+
 def signup(request):
     if request.method == 'POST':
         if request.POST['password1'] == request.POST['password2']:

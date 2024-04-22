@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 동화 이야기</title>
+    <style>
+        body {
+            background-image: url("{% static 'accounts/img/background_1.png' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+        }
+        .start-button {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 100px;
+            text-align: center; /* 수평으로 가운데 정렬 */
+            align-items: center; /* 수직으로 가운데 정렬 */
+            border-radius: 50px; /* 모서리 둥글게 설정 */
+            box-shadow: 0 0 10px;
+            border: solid 5px rgb(250,212,62);
+            background: rgb(250,212,62);
+            color: rgb(117,81,24);
+            font-size: 50px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button class="start-button" style="display: flex; justify-content: center;">시작하기</button>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var startButton = document.querySelector('.start-button');
+            startButton.addEventListener('click', function() {
+                // Check if the user is authenticated
+                var isAuthenticated = "{{ user.is_authenticated }}";
+                if (isAuthenticated === "True") {
+                    window.location.href = '/';
+                } else {
+                    window.location.href = '/accounts/login/';
+                };
+            });
+        });
+    </script>
+</body>
+</html>
