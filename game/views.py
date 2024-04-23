@@ -308,7 +308,7 @@ def index(camera):
                 # 3초 후 게임 시작 이미지 사라짐
                 show_game_start = False
 
-        cv2.imshow("Interactive Display", img)
+        # cv2.imshow("Interactive Display", img)
         key = cv2.waitKey(1)
         if key == ord("q") or key == 27:
             break
@@ -319,6 +319,6 @@ def index(camera):
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
     cap.release()
-    cv2.destroyAllWindows()
+    # cv2.destroyAllWindows()
 
     return redirect('/main3')
