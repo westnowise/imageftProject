@@ -29,13 +29,15 @@
 <body>
     <!-- <h1>Saved Image</h1> -->
     <!-- 이미지 표시 -->
-    <p>Next Page: {{ next_page }}</p>
+    <!-- <p>Next Page: {{ next_page }}</p> -->
     <div id="jsonResponse"></div>
     <img id="savedImage" src="data:image/png;base64,{{ encoded_string }}" alt="Saved Image" style="width: 80%; display: block; margin: 0 auto; margin-top: 0;">
     
     <div id="buttonContainer">
         <!-- 이미지 저장 버튼 -->
-        <img src="{% static 'ft/img/button1.png' %}" alt="다시그리기" onclick="location.href='/image/'" style="width: 200px;">
+        <form id="saveForm" method="POST" action="{% url 'save_image' %}"></form>
+            <img src="{% static 'ft/img/button1.png' %}" alt="다시그리기" onclick="location.href='/image/'" style="width: 200px;">
+        </form>
         
         <form id="saveForm" method="POST" action="{% url 'save_image' %}">
             {% csrf_token %}

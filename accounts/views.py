@@ -36,6 +36,3 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('/')
-
-def main(request):
-    return render(request, 'accounts/start.html')
