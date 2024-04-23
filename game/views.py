@@ -10,6 +10,7 @@ import logging
 from django.conf import settings
 import pygame
 import threading
+from django.http import StreamingHttpResponse
 
 # 최상단에 pygame 초기화
 pygame.init()
@@ -17,10 +18,13 @@ pygame.init()
 
 logger = logging.getLogger(__name__)
 #pygame.mixer.init(driver='directsound') 
-#os.environ["SDL_AUDIODRIVER"] = "alsa"
+os.environ["SDL_AUDIODRIVER"] = "alsa"
 
-def index(request):
+def video_stream(request):
+    return StreamingHttpResponse(index(cv2.VideoCapture(0)),
+                                 content_type='multipart/x-mixed-replace; boundary=frame')
 
+def index(camera):
     static_dir = settings.STATIC_ROOT or settings.STATICFILES_DIRS[0]  # 예제로 첫 번째 STATICFILES_DIRS 사용
     hat_path = os.path.join(static_dir, 'img/game/red_hood(2).png')
     basket_path = os.path.join(static_dir, 'img/game/target.png')
@@ -56,18 +60,19 @@ def index(request):
         return render(request, 'error.html', {'error_message': str(e)})
 
     # 웹캠 설정
-    cap = cv2.VideoCapture(0)
+    # cap = cv2.VideoCapture(0)
+    cap = camera
     frame_width, frame_height = 1280, 720
     cap.set(3, frame_width)
     cap.set(4, frame_height)
     detector = HandDetector(detectionCon=0.8)
 
     # 창 생성 및 위치 조정
-    cv2.namedWindow("Interactive Display", cv2.WINDOW_NORMAL)
-    cv2.moveWindow("Interactive Display", 0, 0)  # 창을 좌상단으로 이동
+    # cv2.namedWindow("Interactive Display", cv2.WINDOW_NORMAL)
+    # cv2.moveWindow("Interactive Display", 0, 0)  # 창을 좌상단으로 이동
 
-    # 창 전체 화면으로 설정
-    cv2.setWindowProperty("Interactive Display", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+    # # 창 전체 화면으로 설정
+    # cv2.setWindowProperty("Interactive Display", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 
     # cv2.namedWindow("Interactive Display", cv2.WINDOW_NORMAL)
     # cv2.setWindowProperty("Interactive Display", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
@@ -307,6 +312,11 @@ def index(request):
         key = cv2.waitKey(1)
         if key == ord("q") or key == 27:
             break
+
+        ret, buffer = cv2.imencode('.jpg', img)
+        frame = buffer.tobytes()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
     cap.release()
     cv2.destroyAllWindows()
