@@ -27,8 +27,9 @@ SECRET_KEY = 'django-insecure-wop7c$4+#0s7r--vxj2+@ko*(6cj_bw4$i0nw@e1@_8p85@a89
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    ".compute-1.amazonaws.com",
-    ".myfairytale.link",
+    # ".compute-1.amazonaws.com",
+    # ".myfairytale.link",
+    
 ]
 
 
@@ -124,10 +125,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static'),
-# ]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 
 # Default primary key field type

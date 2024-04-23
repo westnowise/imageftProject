@@ -110,3 +110,30 @@ def save_image(request):
         context = {'encoded_string': encoded_string, 'next_page': next_page}
         # return JsonResponse({'encoded_string': encoded_string, 'next_page': next_page} )
         return render(request, 'ft/save.html', context)
+    
+def userpage(request):
+    if request.user.is_authenticated:
+        # 사용자의 FairyTale 객체 정보를 조회
+        user_fairytales = FairyTale.objects.filter(user=request.user).order_by('-date')
+
+        # 최신 이미지 2장을 저장할 리스트
+        latest_images = []
+
+        # 최신 이미지 2장을 찾아 리스트에 추가
+        count = 0
+        for fairy_tale in user_fairytales:
+            if fairy_tale.image:
+                # 이미지를 Base64로 인코딩하여 저장
+                base64_image = base64.b64encode(fairy_tale.image).decode('utf-8')
+                latest_images.append({'base64_image': base64_image, 'title': fairy_tale.title})
+                count += 1
+                if count >= 2:
+                    break
+        
+        # 템플릿에 전달할 컨텍스트 데이터
+        context = {
+            'latest_images': latest_images,
+            'next_page': 'main2'
+        }
+
+        return render(request, 'ft/user.html', context)

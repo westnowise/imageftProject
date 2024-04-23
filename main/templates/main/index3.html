@@ -35,12 +35,12 @@
     <div id="videoContainer">
         <!-- 비디오를 표시할 영역 -->
         <input type="hidden" name="next_page" value="/main4">
-        <p>Next Page: /main4</p>
-        {% if user.is_authenticated %}
+        <!-- <p>Next Page: /main4</p> -->
+        <!-- {% if user.is_authenticated %} -->
             <!-- <h3>Welcome, {{ user.username }}</h3> -->
             <div style="display: flex; justify-content: center;">
                 <video id="myVideo" autoplay>
-                    <source src="/media/output/final_output.mp4" type="video/mp4">
+                    <source src="{% static '/video/final_output.mp4' %}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>

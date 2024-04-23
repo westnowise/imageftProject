@@ -38,4 +38,4 @@ def logout(request):
     return redirect('/')
 
 def main(request):
-    return render(request, 'main/index.html')
+    return render(request, 'accounts/start.html')

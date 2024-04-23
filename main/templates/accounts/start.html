@@ -45,9 +45,9 @@
                 // Check if the user is authenticated
                 var isAuthenticated = "{{ user.is_authenticated }}";
                 if (isAuthenticated === "True") {
-                    window.location.href = '/';
+                    window.location.href = '/main';
                 } else {
-                    window.location.href = '/accounts/login/';
+                    window.location.href = '/login/';
                 };
             });
         });

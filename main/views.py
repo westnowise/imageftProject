@@ -108,7 +108,7 @@ def main2(request):
     target_color_hsv = cv2.cvtColor(np.uint8([[target_color_bgr]]), cv2.COLOR_BGR2HSV)[0][0]
 
     # 비디오 스트림을 위한 VideoWriter 객체 생성
-    output_folder = os.path.join(os.path.dirname(__file__), 'media/output')
+    output_folder = os.path.join(static_dir, 'video')
     os.makedirs(output_folder, exist_ok=True)
 
     out = cv2.VideoWriter(os.path.join(output_folder, 'output.mp4'), cv2.VideoWriter_fourcc(*'mp4v'), fps, (int(cap.get(3)), int(cap.get(4))))
@@ -140,13 +140,13 @@ def main2(request):
     # 영상 저장 완료 메시지 표시
     messages.success(request, '영상 저장이 완료되었습니다.')
 
-    return render(request, 'main/index2.html', {'video_url': os.path.join('media', 'output', 'final_output.mp4')})
+    return render(request, 'main/index2.html', {'video_url': os.path.join('video', 'final_output.mp4')})
     # return render(request, 'main/index2.html')
 
 def main3(request):
     # 비디오 스트림 열기
     static_dir = settings.STATIC_ROOT or settings.STATICFILES_DIRS[0]  # 예제로 첫 번째 STATICFILES_DIRS 사용
-    cap_path = os.path.join(static_dir, 'img/vd2.mp4')
+    cap_path = os.path.join(static_dir, 'img/vd3.mp4')
     webimg_path = os.path.join(static_dir, 'img/removed_bg_image.png')
 
     cap = cv2.VideoCapture(cap_path)
@@ -163,7 +163,7 @@ def main3(request):
     target_color_hsv = cv2.cvtColor(np.uint8([[target_color_bgr]]), cv2.COLOR_BGR2HSV)[0][0]
 
     # 비디오 스트림을 위한 VideoWriter 객체 생성
-    output_folder = os.path.join(os.path.dirname(__file__), 'media/output')
+    output_folder = os.path.join(static_dir, 'video')
     os.makedirs(output_folder, exist_ok=True)
 
     out = cv2.VideoWriter(os.path.join(output_folder, 'output.mp4'), cv2.VideoWriter_fourcc(*'mp4v'), fps, (int(cap.get(3)), int(cap.get(4))))
@@ -195,9 +195,9 @@ def main3(request):
     # 영상 저장 완료 메시지 표시
     messages.success(request, '영상 저장이 완료되었습니다.')
 
-    context = {'next_page': 'main4/', 'video_url': os.path.join('media', 'output', 'final_output.mp4')}
+    context = {'next_page': 'main4/', 'video_url': os.path.join('video', 'final_output.mp4')}
 
-    return render(request, 'main/index2.html', context)
+    return render(request, 'main/index3.html', context)
     # return render(request, 'main/index3.html', context)
 
 def main4(request):
@@ -220,7 +220,7 @@ def main4(request):
     target_color_hsv = cv2.cvtColor(np.uint8([[target_color_bgr]]), cv2.COLOR_BGR2HSV)[0][0]
 
     # 비디오 스트림을 위한 VideoWriter 객체 생성
-    output_folder = os.path.join(os.path.dirname(__file__), 'media/output')
+    output_folder = os.path.join(static_dir, 'video')
     os.makedirs(output_folder, exist_ok=True)
 
     out = cv2.VideoWriter(os.path.join(output_folder, 'output.mp4'), cv2.VideoWriter_fourcc(*'mp4v'), fps, (int(cap.get(3)), int(cap.get(4))))
@@ -252,7 +252,7 @@ def main4(request):
     # 영상 저장 완료 메시지 표시
     messages.success(request, '영상 저장이 완료되었습니다.')
 
-    return render(request, 'main/index4.html', {'video_url': os.path.join('media', 'output', 'final_output.mp4')})
+    return render(request, 'main/index4.html', {'video_url': os.path.join('video', 'final_output.mp4')})
     # return render(request, 'main/index2.html')
 
 # def index2(request):

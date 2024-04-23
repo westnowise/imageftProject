@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import cv2
 import cvzone
 from cvzone.HandTrackingModule import HandDetector
@@ -311,8 +311,4 @@ def index(request):
     cap.release()
     cv2.destroyAllWindows()
 
-    return render(request, 'main/index3.html', {
-        'listImg': listImg,
-        'target_pos': target_pos,
-        'target_size': target_size,
-    })
+    return redirect('/main3')

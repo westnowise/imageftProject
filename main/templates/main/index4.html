@@ -38,7 +38,7 @@
             <!-- <h3>Welcome, {{ user.username }}</h3> -->
             <div style="display: flex; justify-content: center;">
                 <video id="myVideo" autoplay>
-                    <source src="/media/output/final_output.mp4" type="video/mp4">
+                    <source src="{% static '/video/final_output.mp4' %}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
@@ -85,7 +85,7 @@
                     imageButton.id = "imageButton";
 
                     imageButton.addEventListener('click', function() {
-                        window.location.href = '/shop/';
+                        window.location.href = '/userpage/';
                     });
                     drawControls.appendChild(imageButton);
             }}

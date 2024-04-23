@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>나의 작품</title>
+    <link rel="stylesheet" href="{% static 'main/css/user.css' %}">
+    <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
+    <style>
+        .header h1 {
+            font-size: 200%; /* 글자 크기를 28px로 설정 */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 그림자 추가 */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>나의 작품 <i class="fas fa-angle-right"></i></h1>
+        <div class="left-box">
+            {% for image in latest_images %}
+                {% if forloop.counter == 1 %}
+                    <img src="data:image/png;base64,{{ image.base64_image }}" alt="{{ image.title }}">
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="right-box">
+            {% for image in latest_images %}
+                {% if forloop.counter == 2 %}
+                    <img src="data:image/png;base64,{{ image.base64_image }}" alt="{{ image.title }}">
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="white-box">
+            <div class="left-section">
+                <div class="image-container">
+                    <img src="{% static 'ft/img/main_img.png' %}" alt="main_img" class="image3">
+                </div>
+            </div>
+            <div class="middle-section">
+                <p id="recommendation">#오늘의 추천</p>
+                <p id="girl">성냥팔이 소녀</p>
+            </div>
+            <div class="right-section">
+                <div class="image-container">
+                    <img src="{% static 'ft/img/100.png' %}" alt="100" class="image1">
+                </div>
+                <div class="image-container">
+                    <img src="{% static 'ft/img/good.png' %}" alt="good" class="image2">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="left-container">
+            <img src="{% static 'ft/img/back.png' %}" alt="back" class="image4">
+        </div>
+        <div class="right-container">
+            <img src="{% static 'ft/img/gallary.png' %}" alt="gallary" class="image5">
+        </div>
+    </div>
+
+    <!-- 모달을 처음부터 숨겨둔 상태로 추가 -->
+    <div id="error-modal" style="display: none;">
+        <div class="error-image-container">
+            <div class="grid-container">
+                <div class="grid-item">
+                    <img src="{% static 'ft/img/error1.png' %}" alt="Error Image">
+                </div>
+                <div class="grid-item exit-button"><img src="{% static 'ft/img/exit.png' %}" alt="Exit"></div>
+                <div class="grid-item cancel-button"><img src="{% static 'ft/img/cancel.png' %}" alt="Cancel"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript 코드는 그대로 유지 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const backImageContainer = document.querySelector('.image4');
+        const errorModal = document.getElementById('error-modal');
+        const cancelButton = document.querySelector('.cancel-button');
+        const errorImages = document.querySelectorAll('.error-image-container img');
+
+        // 처음에는 error modal 숨기기
+        errorModal.style.display = 'none';
+
+        backImageContainer.addEventListener('click', function(event) {
+            // 클릭 이벤트 전파 방지
+            event.stopPropagation();
+            // error modal 보이기
+            errorModal.style.display = 'block';
+        });
+
+        // 모달 외부 클릭 시 모달 닫기
+        window.addEventListener('click', function(event) {
+            if (event.target === errorModal) {
+                errorModal.style.display = 'none';
+            }
+        });
+
+        // 취소 버튼 클릭 시 모달 닫기
+        cancelButton.addEventListener('click', function(event) {
+            event.stopPropagation();
+            errorModal.style.display = 'none';
+        });
+
+    });
+    </script>
+</body>
+</html>

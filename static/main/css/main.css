@@ -157,10 +157,19 @@ body, html {
     border-top-right-radius: 20px; /* Rounded top right corner */
 }
 
+.search-bar i{
+    position:relative;
+    left: 45px;
+    /*bottom: 50px; */
+    font-size: 24px;
+    font-weight: 900;
+}
+
 input[type="text"] {
     padding: 10px;
     width: 70%;
     height: 50%;
+    padding-left: 50px;
     border-radius: 16px;
     border: none;
     outline: none;
