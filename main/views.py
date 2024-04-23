@@ -122,10 +122,6 @@ def main2(request):
 
         out.write(frame)
 
-        cv2.imshow('frame',frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
     cap.release()
     out.release()
     cv2.destroyAllWindows()
@@ -176,10 +172,6 @@ def main3(request):
         frame = mosaic_frame(frame, webcam_image, target_color_hsv)
 
         out.write(frame)
-
-        cv2.imshow('frame',frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
 
     cap.release()
     out.release()
@@ -233,11 +225,7 @@ def main4(request):
         frame = mosaic_frame(frame, webcam_image, target_color_hsv)
 
         out.write(frame)
-
-        cv2.imshow('frame',frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
+        
     cap.release()
     out.release()
     cv2.destroyAllWindows()
