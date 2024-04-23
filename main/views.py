@@ -91,8 +91,8 @@ def mosaic_frame(frame, webcam_image_resized, target_color_hsv, tolerance=30):
 def main2(request):
     # 비디오 스트림 열기
     static_dir = settings.STATIC_ROOT or settings.STATICFILES_DIRS[0]  # 예제로 첫 번째 STATICFILES_DIRS 사용
-    cap_path = os.path.join(static_dir, '/img/vd2.mp4')
-    webimg_path = os.path.join(static_dir, '/img/removed_bg_image.png')
+    cap_path = os.path.join(static_dir, 'img/vd2.mp4')
+    webimg_path = os.path.join(static_dir, 'img/removed_bg_image.png')
 
     cap = cv2.VideoCapture(cap_path)
     fps = cap.get(cv2.CAP_PROP_FPS)  # 원래 동영상의 프레임 속도 사용
@@ -146,8 +146,8 @@ def main2(request):
 def main3(request):
     # 비디오 스트림 열기
     static_dir = settings.STATIC_ROOT or settings.STATICFILES_DIRS[0]  # 예제로 첫 번째 STATICFILES_DIRS 사용
-    cap_path = os.path.join(static_dir, '/img/vd2.mp4')
-    webimg_path = os.path.join(static_dir, '/img/removed_bg_image.png')
+    cap_path = os.path.join(static_dir, 'img/vd2.mp4')
+    webimg_path = os.path.join(static_dir, 'img/removed_bg_image.png')
 
     cap = cv2.VideoCapture(cap_path)
     fps = cap.get(cv2.CAP_PROP_FPS)  # 원래 동영상의 프레임 속도 사용
@@ -203,8 +203,8 @@ def main3(request):
 def main4(request):
     # 비디오 스트림 열기
     static_dir = settings.STATIC_ROOT or settings.STATICFILES_DIRS[0]  # 예제로 첫 번째 STATICFILES_DIRS 사용
-    cap_path = os.path.join(static_dir, '/img/vd4.mp4')
-    webimg_path = os.path.join(static_dir, '/img/removed_bg_image.png')
+    cap_path = os.path.join(static_dir, 'img/vd4.mp4')
+    webimg_path = os.path.join(static_dir, 'img/removed_bg_image.png')
 
     cap = cv2.VideoCapture(cap_path)
     fps = cap.get(cv2.CAP_PROP_FPS)  # 원래 동영상의 프레임 속도 사용
