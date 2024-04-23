@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-wop7c$4+#0s7r--vxj2+@ko*(6cj_bw4$i0nw@e1@_8p85@a89
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    # ".compute-1.amazonaws.com",
-    # ".myfairytale.link",
+    ".compute-1.amazonaws.com",
+    ".myfairytale.link",
     
 ]
 
