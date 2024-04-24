@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 os.environ["SDL_AUDIODRIVER"] = "alsa"
 
 def video_stream(request):
-    return StreamingHttpResponse(index(cv2.VideoCapture(0)),
+    return StreamingHttpResponse(index(cv2.VideoCapture('/dev/video0')),
                                  content_type='multipart/x-mixed-replace; boundary=frame')
 
 def index(camera):
@@ -57,7 +57,7 @@ def index(camera):
         fail_img = add_alpha_channel(cv2.imread(fail_path, cv2.IMREAD_UNCHANGED))
     except Exception as e:
         logger.error(f"Error loading images: {str(e)}")
-        return render(request, 'error.html', {'error_message': str(e)})
+        return render('error.html', {'error_message': str(e)})
 
     # 웹캠 설정
     # cap = cv2.VideoCapture(0)
