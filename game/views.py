@@ -10,7 +10,7 @@ import logging
 from django.conf import settings
 import pygame
 import threading
-from django.http import StreamingHttpResponse
+from django.http import StreamingHttpResponse, HttpResponse
 
 # 최상단에 pygame 초기화
 pygame.init()
@@ -21,7 +21,11 @@ logger = logging.getLogger(__name__)
 os.environ["SDL_AUDIODRIVER"] = "alsa"
 
 def video_stream(request):
-    return StreamingHttpResponse(index(cv2.VideoCapture('/dev/video0')),
+    camera = cv2.VideoCapture('/dev/video0')
+    if not camera.isOpened():
+        return HttpResponse("Failed to open camera.")
+    
+    return StreamingHttpResponse(index(camera),
                                  content_type='multipart/x-mixed-replace; boundary=frame')
 
 def index(camera):
