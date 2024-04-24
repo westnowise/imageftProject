@@ -23,10 +23,23 @@ logger = logging.getLogger(__name__)
 os.environ["SDL_AUDIODRIVER"] = "alsa"
 
 def video_stream(request):
-    return StreamingHttpResponse(index(cv2.VideoCapture('/dev/video0')),
+    return StreamingHttpResponse(gen_frames(cv2.VideoCapture('/dev/video0')),
                                  content_type='multipart/x-mixed-replace; boundary=frame')
 
-def index(camera):
+def gen_frames():
+    camera = cv2.VideoCapture('/dev/video0')  # 웹캠 장치에 맞는 경로를 입력하세요.
+    while True:
+        success, frame = camera.read()  # 카메라에서 프레임을 읽기
+        if not success:
+            break
+        else:
+            ret, buffer = cv2.imencode('.jpg', frame)
+            frame = buffer.tobytes()
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # 웹페이지에 프레임 전송
+
+
+# def index(camera):
     static_dir = settings.STATIC_ROOT or settings.STATICFILES_DIRS[0]  # 예제로 첫 번째 STATICFILES_DIRS 사용
     hat_path = os.path.join(static_dir, 'img/game/red_hood(2).png')
     basket_path = os.path.join(static_dir, 'img/game/target.png')
