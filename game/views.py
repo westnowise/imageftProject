@@ -12,7 +12,7 @@ import pygame
 import threading
 from django.http import StreamingHttpResponse, HttpResponse
 
-os.environ['XDG_RUNTIME_DIR'] = '/tmp/runtime-dir'
+#os.environ['XDG_RUNTIME_DIR'] = '/tmp/runtime-dir'
 
 # 최상단에 pygame 초기화
 pygame.init()
@@ -20,7 +20,7 @@ pygame.init()
 
 logger = logging.getLogger(__name__)
 #pygame.mixer.init(driver='directsound') 
-os.environ["SDL_AUDIODRIVER"] = "alsa"
+# os.environ["SDL_AUDIODRIVER"] = "alsa"
 
 def video_stream(request):
     return StreamingHttpResponse(gen_frames(cv2.VideoCapture('/dev/video0')),
