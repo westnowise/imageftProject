@@ -12,6 +12,8 @@ import pygame
 import threading
 from django.http import StreamingHttpResponse, HttpResponse
 
+os.environ['XDG_RUNTIME_DIR'] = '/tmp/runtime-dir'
+
 # 최상단에 pygame 초기화
 pygame.init()
 # pygame.mixer.init()
