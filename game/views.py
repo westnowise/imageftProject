@@ -21,11 +21,7 @@ logger = logging.getLogger(__name__)
 os.environ["SDL_AUDIODRIVER"] = "alsa"
 
 def video_stream(request):
-    camera = cv2.VideoCapture('/dev/video0')
-    if not camera.isOpened():
-        return HttpResponse("Failed to open camera.")
-    
-    return StreamingHttpResponse(index(camera),
+    return StreamingHttpResponse(index(cv2.VideoCapture('/dev/video0')),
                                  content_type='multipart/x-mixed-replace; boundary=frame')
 
 def index(camera):
