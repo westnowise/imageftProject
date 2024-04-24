@@ -23,11 +23,11 @@ logger = logging.getLogger(__name__)
 # os.environ["SDL_AUDIODRIVER"] = "alsa"
 
 def video_stream(request):
-    return StreamingHttpResponse(gen_frames(cv2.VideoCapture('/dev/video0')),
+    return StreamingHttpResponse(gen_frames(cv2.VideoCapture(0)),
                                  content_type='multipart/x-mixed-replace; boundary=frame')
 
-def gen_frames():
-    camera = cv2.VideoCapture('/dev/video0')  # 웹캠 장치에 맞는 경로를 입력하세요.
+def gen_frames(camera):
+    # camera = cv2.VideoCapture('/dev/video0')  # 웹캠 장치에 맞는 경로를 입력하세요.
     while True:
         success, frame = camera.read()  # 카메라에서 프레임을 읽기
         if not success:
