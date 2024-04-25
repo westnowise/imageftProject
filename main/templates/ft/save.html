@@ -30,14 +30,16 @@
 <body>
     <!-- <h1>Saved Image</h1> -->
     <!-- 이미지 표시 -->
-    <!-- <p>Next Page: {{ next_page }}</p> -->
+    <p>Next Page: {{ next_page }}</p>
     <div id="jsonResponse"></div>
     <img id="savedImage" src="data:image/png;base64,{{ encoded_string }}" alt="Saved Image" style="width: 80%; display: block; margin: 0 auto; margin-top: 0;">
     
     <div id="buttonContainer">
-        <!-- 이미지 저장 버튼 -->
-        <form id="saveForm" method="POST" action="{% url 'save_image' %}"></form>
-            <img src="{% static 'ft/img/button1.png' %}" alt="다시그리기" onclick="location.href='/image/'" style="width: 200px;">
+        <!-- 다시그리기 버튼 -->
+        <form id="aginaForm" method="POST" action="{% url 'image' %}">
+            {% csrf_token %}
+            <input type="hidden" name="next_page" id="next_page" value="{{ next_page }}">
+            <img src="{% static 'ft/img/button1.png' %}" alt="다시그리기" onclick="submitForm('aginaForm');" style="width: 200px;">
         </form>
         
         <form id="saveForm" method="POST" action="{% url 'save_image' %}">
@@ -51,6 +53,11 @@
     </div>
 
 <script>
+    // 이전 페이지로 돌아가는 폼을 제출하는 함수
+    function submitForm(formId) {
+        var nextPageValue = document.getElementById("next_page").value; // next_page 값을 가져옴
+        document.getElementById(formId).submit(); // 폼 제출
+    }
     function copyImageData() {
         // 이미지 태그에서 Base64 인코딩된 이미지 데이터를 가져옴
         var imageData = document.getElementById('savedImage').src;

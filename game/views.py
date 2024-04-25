@@ -10,36 +10,20 @@ import logging
 from django.conf import settings
 import pygame
 import threading
-from django.http import StreamingHttpResponse, HttpResponse
-
-#os.environ['XDG_RUNTIME_DIR'] = '/tmp/runtime-dir'
+from django.http import StreamingHttpResponse, JsonResponse
 
 # 최상단에 pygame 초기화
 pygame.init()
 # pygame.mixer.init()
 
 logger = logging.getLogger(__name__)
-#pygame.mixer.init(driver='directsound') 
-# os.environ["SDL_AUDIODRIVER"] = "alsa"
 
-def video_stream(request):
-    return StreamingHttpResponse(gen_frames(cv2.VideoCapture(0)),
-                                 content_type='multipart/x-mixed-replace; boundary=frame')
+camera_active = True
 
-def gen_frames(camera):
-    # camera = cv2.VideoCapture('/dev/video0')  # 웹캠 장치에 맞는 경로를 입력하세요.
-    while True:
-        success, frame = camera.read()  # 카메라에서 프레임을 읽기
-        if not success:
-            break
-        else:
-            ret, buffer = cv2.imencode('.jpg', frame)
-            frame = buffer.tobytes()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # 웹페이지에 프레임 전송
+def gen_frames():
+    global camera_active
+    cap = cv2.VideoCapture(0)
 
-
-# def index(camera):
     static_dir = settings.STATIC_ROOT or settings.STATICFILES_DIRS[0]  # 예제로 첫 번째 STATICFILES_DIRS 사용
     hat_path = os.path.join(static_dir, 'img/game/red_hood(2).png')
     basket_path = os.path.join(static_dir, 'img/game/target.png')
@@ -76,7 +60,6 @@ def gen_frames(camera):
 
     # 웹캠 설정
     # cap = cv2.VideoCapture(0)
-    cap = camera
     frame_width, frame_height = 1280, 720
     cap.set(3, frame_width)
     cap.set(4, frame_height)
@@ -202,7 +185,7 @@ def gen_frames(camera):
     show_game_start = True
     game_start_time = None
         
-    while True:
+    while camera_active:
         success, img = cap.read()
         if not success:
             break
@@ -276,7 +259,10 @@ def gen_frames(camera):
                         audio_played = False  # 오디오 재생 상태 초기화
                         audio_start_time = None  # 오디오 시작 시간 초기화
                         image_start_time = None
+                        print("success")
                         break
+                    
+                    
             elif result_image is fail_img:
                 if not audio_played:
                     # 이미지가 뜨기 1초 전에 오디오 재생
@@ -332,8 +318,29 @@ def gen_frames(camera):
         frame = buffer.tobytes()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
     cap.release()
-    # cv2.destroyAllWindows()
+    stop_camera_util()
 
-    return redirect('/main3')
+def video_stream(request):
+    global camera_active
+    camera_active = True
+    return StreamingHttpResponse(gen_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
+
+def stop_camera_util():
+    global camera_active
+    camera_active = False
+
+def stop_camera(request):
+    stop_camera_util()
+    return JsonResponse({'status': 'stopped'})
+
+def check_camera_status(request):
+    global camera_active
+    if not camera_active:
+        return JsonResponse({'active': False})
+    else:
+        return JsonResponse({'active': True})
+    
+def game(request):
+    # HTML 페이지 렌더링
+    return render(request, 'game/game.html')

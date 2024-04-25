@@ -1,25 +1,31 @@
+<!-- game_page.html -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Video Stream</title>
-    </head>
-    <body>
-        <h1>Video Stream Example</h1>
-
-        <video id="video" width="640" height="480" autoplay></video>
-        <!-- <img src="{% url 'video_stream' %}" width="640" height="480">/// -->
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>Video Streaming</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        const video = document.getElementById('video');
-
-        if (navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function(stream) {
-                video.srcObject = stream;
-            })
-            .catch(function(err) {
-                console.log("An error occurred: " + err);
-            });
-        }
+        $(document).ready(function(){
+            // 주기적으로 카메라 상태 확인을 위한 타이머 ID 저장 변수
+            var checkCameraStatusInterval = setInterval(function(){
+                $.ajax({
+                    url: 'check_camera_status/',
+                    success: function(response) {
+                        if (!response.active) {
+                            // 카메라가 비활성화 상태일 때, 주기적 실행 중단
+                            clearInterval(checkCameraStatusInterval);
+                            // /main3 페이지로 리다이렉트
+                            window.location.href = '/main3';
+                        }
+                    }
+                });
+            }, 1000); // 매 1초마다 실행
+        });
     </script>
+</head>
+<body>
+    <h1>Video Streaming Example</h1>
+    <img src="{% url 'video_stream' %}" width="640" height="480"> <!-- Display streaming video -->
+</body>
 </html>
