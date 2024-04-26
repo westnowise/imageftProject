@@ -34,9 +34,12 @@ https://visualstudio.microsoft.com/ko/visual-cpp-build-tools/
 
 
 ### Running
-
-
-
+    python -m venv myvenv
+    # 가상환경 접속
+    source /myvenv/bin/activate
+    # Needed pip 설치 
+    cd /Dproject
+    python manage.py runserver
 
 
 ## Data Preprocessing
