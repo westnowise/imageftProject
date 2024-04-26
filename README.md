@@ -1,4 +1,5 @@
 # 👸매일 듣는 동화 이야기
+
 ### 체감형-교육 프로그램
  해당 프로젝트는 학습자인 만4~5세 유아들이 학습할 수 있는 체감형 교육 컨텐츠를 제작하고, 웹으로 배포하는 것을 목표로 한다.
 
@@ -8,10 +9,31 @@
 
 
 ## 🔖 Guide
-### Packages Needed
+### Needed
     python 3.11.7 >
-    
-    
+    pip install -r requirement.txt
+    pip install pydub simpleaudio # 오류 발생 가능
+
+pip install pydub 오류 발생 시
+1) visual c++ build tools설치
+https://visualstudio.microsoft.com/ko/visual-cpp-build-tools/
+오류 해결 방법:
+Microsoft Visual C++ Build Tools 설치:
+오류 메시지에 나온 대로 Microsoft C++ Build Tools 웹사이트를 방문하여 C++ 빌드 도구를 설치하세요. 설치할 때 "C++ 데스크톱 개발" 워크로드를 포함시키는 것을 확인하십시오.
+환경 재설정 후 재시도:
+C++ 빌드 도구를 설치한 후, 명령 프롬프트나 PowerShell을 재시작하고 pip install simpleaudio를 다시 시도하세요.
+
+3) ffmpeg 환경변수 설정
+1.  ffmpeg 오류 설명 
+https://papago.naver.net/website?locale=ko&source=en&target=ko&url=https%3A%2F%2Fkminito.tistory.com%2F104
+2. ffmpeg 설치
+https://papago.naver.net/website?locale=ko&source=en&target=ko&url=https%3A%2F%2Fkminito.tistory.com%2F108
+
+    echo %SDL_AUDIODRIVER%     # CMD
+    set SDL_AUDIODRIVER= (편집됨)
+
+4) 재부팅 후 재설치
+   
 ### Running
 
 
