@@ -16,12 +16,16 @@
 
 pip install pydub 오류 발생 시
 1) Microsoft Visual C++ Build Tools 설치
+
 https://visualstudio.microsoft.com/ko/visual-cpp-build-tools/
+
 설치 시 "C++ 데스크톱 개발" 워크로드를 포함
 
 
 3) ffmpeg 환경변수 설정
-   - ffmpeg 설치 https%3A%2F%2Fkminito.tistory.com%2F108
+   - ffmpeg 설치
+
+https%3A%2F%2Fkminito.tistory.com%2F108
   
     echo %SDL_AUDIODRIVER%     # CMD
     set SDL_AUDIODRIVER= (편집됨)
