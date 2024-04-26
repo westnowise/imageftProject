@@ -21,9 +21,9 @@ https://visualstudio.microsoft.com/ko/visual-cpp-build-tools/
 
 
 3) ffmpeg 환경변수 설정
-1.  ffmpeg 오류 설명 
+ 1.  ffmpeg 오류 설명 
 https://papago.naver.net/website?locale=ko&source=en&target=ko&url=https%3A%2F%2Fkminito.tistory.com%2F104
-2. ffmpeg 설치
+ 2. ffmpeg 설치
 https://papago.naver.net/website?locale=ko&source=en&target=ko&url=https%3A%2F%2Fkminito.tistory.com%2F108
 
     echo %SDL_AUDIODRIVER%     # CMD
