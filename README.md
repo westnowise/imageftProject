@@ -1,6 +1,7 @@
 # 👸매일 듣는 동화 이야기
 
 ### 👶체감형-교육 프로그램
+
  해당 프로젝트는 학습자인 만4~5세 유아들이 학습할 수 있는 체감형 교육 컨텐츠를 제작하고, 웹으로 배포하는 것을 목표로 한다.
 
  유아의 학습 활동은 인지 및 신체 발달, 지식을 향상시킬 수 있는 효율적인 방법으로,  학습자가 그린 그림을 웹캠으로 인식하여 배경과 피사체를 분리하고 피사체만 DB에 저장 후 동화 비디오에 합성하는 이미지 인식 동화 컨텐츠와. 학습자의 웹캠을 통해 학습자의 손 동작을 인식하여 화면 속 알맞은 금액의 동전을 바구니에 올바르게 넣는 모션 인식 게임을 제작하였다.
@@ -23,9 +24,7 @@ https://visualstudio.microsoft.com/ko/visual-cpp-build-tools/
 
 
 3) ffmpeg 환경변수 설정
-   - ffmpeg 설치
-
-https%3A%2F%2Fkminito.tistory.com%2F108
+   - ffmpeg 설치 https%3A%2F%2Fkminito.tistory.com%2F108
   
     echo %SDL_AUDIODRIVER%     # CMD
     set SDL_AUDIODRIVER= (편집됨)
