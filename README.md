@@ -1,4 +1,5 @@
 # 👸매일 듣는 동화 이야기
+![image](https://github.com/westnowise/imageftProject/assets/98007431/914762bc-28a6-4b60-ac2b-9c74535d4cf4)
 
 ### 👶체감형-교육 프로그램
 
@@ -58,6 +59,6 @@ https://visualstudio.microsoft.com/ko/visual-cpp-build-tools/
 | 윤소현 | 모션인식,  웹 배포 ||
 | 이수현 | 모션인식, 프론트 ||
 | 박수아 | 영상처리, 프론트 ||
-| 조서 | 이미지 전처리,  웹 제작 및 배포 ||
+| 조서현 | 이미지 전처리,  웹 제작 및 배포 ||
 
 
