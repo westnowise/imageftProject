@@ -1,0 +1,245 @@
+* {
+    box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
+}
+/* 너비가 컨테이너를 초과하는 요소에 대한 일반적인 해결책 */
+.some-element {
+    max-width: 100%; /* 부모의 최대 너비를 넘지 않도록 설정 */
+    overflow-x: hidden; /* 필요한 경우 요소 내의 수평 스크롤 숨김 */
+}
+body, html { height: 100%;
+margin: 0;
+padding: 0;
+ overflow-x: hidden; /* 변경된 부분: 스크롤 바를 없앰 */
+}
+body::before {
+    content: ""; /* 가상 요소는 내용이 있어야 화면에 나타납니다 */
+    position: absolute; /* 절대 위치 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../img/goods/Shapes.png'); 
+    background-position: left bottom; /* 왼쪽 하단에 배치 */
+    background-repeat: no-repeat; /* 이미지가 반복되지 않도록 설정 */
+    z-index: -1; /* 다른 요소들 뒤에 위치하도록 z-index 설정 */
+}
+.container {
+    /* max-height: 100%;  */
+    overflow-y: auto; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    }
+.header {
+    background-color: #F6CD00;
+    padding: 5px 10px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    color: #fff;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    position: relative;
+    width: 100%;
+    overflow-y: hidden;
+}
+
+.left-section,
+.center-section,
+.right-section {
+    flex-basis: 33.33%; /* 3등분으로 설정 */
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    height: 100%;
+    margin-right: 5%;
+}
+
+.icon-container .fas.fa-arrow-left{
+    margin-left: 10%;
+}
+
+.text-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    top: 5%; /* 적절한 값으로 조절하여 header 위로 올립니다 */
+    transform: translateX(-50%);
+}
+
+.right-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+    height: 100%;
+    margin-left: 10%;
+}
+
+.header-title {
+    font-size: 2.5rem;
+    margin: 0; /* 기본 마진 제거하여 여백 없앰 */
+    text-align: center; /* 텍스트를 가운데 정렬 */
+
+}
+
+.icon-container i {
+    font-size: 3rem; /* 아이콘 크기 조정 */
+}
+
+
+.carousel-container { position: relative; /* 기존 스타일을 유지하면서 이 줄을 추가합니다. */
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 1800px;
+    margin: 20px auto; }
+
+
+.arrow-container {
+    position: fixed;
+    bottom: 0;
+    right: 10%;
+    z-index: 10;
+    
+}
+
+.arrow_left,
+.arrow_right {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    transform: translateY(-50%);
+}
+
+.arrow_left {
+    right: 0; /* 왼쪽에 배치 */
+}
+
+.arrow_right {
+    left: 0; /* 오른쪽에 배치 */
+}
+
+button{
+    border: none; /* 버튼의 테두리를 없앱니다. */
+    background-color: transparent; /* 버튼의 배경색을 없앱니다. */
+}
+
+
+
+.goods-item {
+    position: relative; 
+    align-items: center;
+    background-color: rgba(249, 249, 249, 0.4);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    width: 300px;
+    height: 500px;
+    margin: 0 10px;
+}
+
+.item-images {
+    position: relative; 
+    overflow: hidden; 
+}
+
+.item-images img {
+    width: 80%; 
+    height: auto; 
+}
+
+.db-image {
+    position: absolute; 
+    top: 10%; 
+    left: 15%; 
+    width: 150px; 
+    height: auto; 
+    z-index: 1; 
+    background-repeat: no-repeat;
+}
+
+
+
+.goods-container {
+    display: flex;
+    overflow-x: hidden; 
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.goods-container::-webkit-scrollbar { display: none; }
+
+    
+.goods-info { 
+    background-color: none; 
+    padding: 10px; 
+    border-radius: 10px; 
+    text-align: center; 
+    margin-top: 10px; }
+.goods-info h3 { 
+    font-size: 1.4em; 
+    color: #333; }
+.goods-info p { 
+    font-size: 1.2em; 
+    color: #555; }
+
+.discount-price {
+    text-decoration: line-through; /* 가운데 선을 그어줍니다. */
+}
+
+.buy-button { 
+    display: block;
+    width: 80%; /* 원하는 너비에 맞게 조정 */
+    padding: 12px 24px; /* 패딩은 버튼의 크기에 영향을 줍니다 */
+    background-color: #F6CD00; /* 배경색은 유지 */
+    color: #fff;
+    margin: 10px auto;
+    border: none;
+    border-radius: 25px; /* 더 둥근 모서리를 위해 값을 증가 */
+    font-size: 1em; /* 텍스트 크기 조정 */
+    font-weight: 500; /* 폰트 굵기 조정 */
+    text-transform: none; /* 대문자 효과 제거 */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+    cursor: pointer;
+    align-self: center;
+    text-align: center;
+    }
+
+#calendar-modal {
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.calendar-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    z-index: 1001; /* 모달 창보다 위에 위치하도록 설정 */
+}
+    

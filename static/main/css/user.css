@@ -1,0 +1,265 @@
+body, html {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: #F6CD00;
+    padding-top: 20%; /* 상단에 여백 추가 */
+    padding: 14%;
+    text-align: center;
+    color: #fff;
+    border-bottom-left-radius: 5%; /* Rounded bottom left corner */
+    border-bottom-right-radius: 5%; /* Rounded bottom right corner */
+    position: absolute;
+    /* height: 50%; */
+    /* 위의 height 속성 삭제 */
+}
+
+.backgd {
+    position: absolute;
+    background-color: yellow;
+    padding: 6%;
+    width: 98%;
+    height: 30%; /* 높이를 30%로 조정 */
+    left: 6%;
+    bottom: 0; /* 밑에 위치하도록 함 */
+    text-align: center;
+    color: #fff;
+    border-bottom-left-radius: 5%; /* Rounded bottom left corner */
+    border-bottom-right-radius: 5%; /* Rounded bottom right corner */
+    z-index: -1; /* backgd 요소를 header 뒤에 겹치게 함 */
+}
+
+
+.header h1 {
+    display: none; /* 텍스트 숨기기 */
+}
+
+.header::before {
+    content: ''; /* 내용이 없는 가상 요소 */
+    background-image: url('img/title.png'); /* 이미지 추가 */
+    background-size: contain; /* 이미지가 요소에 맞게 조정되도록 */
+    background-repeat: no-repeat; /* 배경 이미지 반복 방지 */
+    background-position: center; /* 이미지 중앙 정렬 */
+    display: inline-block;
+    position: absolute;
+    left: 10%; /* 이미지를 가운데로 이동 */
+    top: 10%; /* 위에서 20px 위치로 이동 */
+    transform: translateX(-50%); /* 이미지를 가운데 정렬 */
+    width: 10%; /* 이미지 너비 조절 */
+    height: 10%; /* 이미지 높이 조절 */
+}
+
+.header::after {
+    content: ''; /* 내용이 없는 가상 요소 */
+    background-image: url('img/arrow.png'); /* 추가 이미지 */
+    background-size: contain; /* 이미지가 요소에 맞게 조정되도록 */
+    background-repeat: no-repeat; /* 배경 이미지 반복 방지 */
+    background-position: center; /* 이미지 중앙 정렬 */
+    display: inline-block;
+    position: absolute;
+    left: calc(10% + 7%); /* title.png 오른쪽 바로 옆에 위치 */
+    top: 10%; /* 위에서 20px 위치로 이동 */
+    transform: translateX(-50%); /* 이미지를 가운데 정렬 */
+    width: 10%; /* 이미지 너비 조절 */
+    height: 10%; /* 이미지 높이 조절 */
+}
+
+
+/* .header i {
+    position: absolute;
+    top: 50%;
+    right: 100px;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 36px;
+    cursor: pointer;
+} */
+
+
+.header {
+    position: relative; /* 상대 위치 */
+    display: flex; /* 플렉스 박스 사용 */
+    justify-content: center; /* 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+
+.left-box,
+.right-box {
+    width: 40%; /* 박스 너비 */
+    height: 70%; /* 박스 높이 */
+    background-color: rgb(255, 242, 205); /* 박스 색상 */
+    position: absolute; /* 절대 위치 */
+    bottom: 20px; /* 헤더 하단에서 10px 위로 이동 */
+    border-radius: 10%; /* 라운드 형식의 박스로 설정 */
+    box-shadow: 0px 4px 8px rgba(59, 52, 39, 0.2); /* 그림자 효과 추가 */
+    display: flex; /* 플렉스 박스 사용 */
+    justify-content: center; /* 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+
+.left-box {
+    left: 8%; /* 왼쪽 박스의 위치를 헤더 가운데에 위치 */
+}
+
+.right-box {
+    right: 8%; /* 오른쪽 박스의 위치를 헤더 가운데에 위치 */
+}
+
+.left-box img,
+.right-box img {
+    max-width: 100%; /* 이미지가 상자에 맞게 조정되도록 */
+    max-height: 100%; /* 이미지가 상자에 맞게 조정되도록 */
+}
+
+.container {
+    height: auto;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.white-box {
+    background-color: white;
+    width: 80%;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between; /* 왼쪽과 오른쪽에 각 섹션을 공간을 가지고 정렬 */
+    align-items: center;
+}
+
+.left-section,
+.middle-section,
+.right-section {
+    flex: 1; /* 각 섹션을 동일한 너비로 설정 */
+}
+
+.image3 {
+    width: 90%;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    margin-left: 5%; /* 이미지 3을 오른쪽으로 이동 */
+}
+
+.left-section,
+.middle-section,
+.right-section {
+    display: flex;
+    align-items: center;
+}
+
+.image1 {
+    width: 100%; /* 이미지 1의 너비를 50%로 설정하여 왼쪽에 배치 */
+    max-height: 100%;
+}
+
+.image2 {
+    width: 100%; /* 이미지 2의 너비를 50%로 설정하여 오른쪽에 배치 */
+    max-height: 100%;
+}
+
+.middle-section {
+    text-align: center; /* 가운데 정렬 */
+    display: flex; /* 플렉스 박스 사용 */
+    flex-direction: column; /* 세로 방향으로 요소 배치 */
+    align-items: flex-start; /* 수직 가운데 정렬 */
+}
+
+#recommendation {
+    font-size: 120%;
+    margin-bottom: 0; /* '성냥팔이 소녀' 텍스트와의 간격 조절 */
+}
+
+#girl {
+    font-weight: bold;
+    font-size: 250%; /* 폰트 크기를 120%로 증가시킴 */
+    margin-top: 3%; /* '오늘의 추천' 텍스트와의 간격 조절 */
+    max-width: 80%; /* 최대 너비 설정 */
+    width: 100%; /* 너비 100%로 설정하여 작아질 때 함께 작아지도록 함 */
+}
+
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.image4, .image5 {
+    width: 90%; /* 이미지의 너비 */
+    height: auto; /* 이미지의 높이 */
+    margin-right: 5%; /* 이미지 사이에 오른쪽 여백 추가 */
+    cursor: pointer;
+}
+
+
+#error-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.error-image-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.error-image-container img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto; /* 2개의 열로 설정 */
+    grid-gap: 10px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 10px; /* 간격 추가 */
+}
+
+.exit-button, .cancel-button {
+    position: absolute;
+    bottom: 10%; /* 하단 여백 설정 */
+    cursor: pointer;
+}
+
+.exit-button {
+    left: 50%; /* 왼쪽 여백 설정 */
+}
+
+.cancel-button {
+    right: 50%; /* 오른쪽 여백 설정 */
+}
+
+.exit-button img, .cancel-button img {
+    width: 75%; /* 이미지의 너비를 조정합니다. */
+    height: 75%; /* 이미지의 높이를 조정합니다. */
+}

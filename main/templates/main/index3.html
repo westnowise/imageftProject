@@ -1,0 +1,236 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body, html {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #videoContainer {
+            position: relative;
+        }
+        #videoContainer video {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: 0 auto; /* 수평 가운데 정렬 */
+        }
+        #videoControls {
+            position: absolute;
+            top: 3%;
+            left: 2%;
+            z-index: 1;
+        }
+        #persistentButton{
+            width: 100px; 
+            height: 100px;   
+        }
+        #drawControls {
+            position: absolute;
+            bottom: 5%;
+            right: 13%;
+            z-index: 1;
+            cursor: pointer;
+        }
+        #modalContainer {
+            display: none; /* 초기에는 모달 숨김 */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 300px;
+            background-image: url("{% static 'ft/img/popup3_1.png' %}");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            z-index: 2;
+            display: flex;
+        }
+        .modal-exitButton,
+        .modal-cancelButton {
+            background-color: transparent;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            border: none;
+            width: 200px;
+            height: 100px;
+            z-index: 3;
+            cursor: pointer;
+        }
+        .modal-exitButton {
+            background-image: url("{% static 'ft/img/popup3_2.png' %}");
+            position: fixed;
+            top: 55%;
+            left: 12%;
+        }
+        .modal-cancelButton {
+            background-image: url("{% static 'ft/img/popup3_3.png' %}");
+            position: fixed;
+            top: 55%;
+            left: 55%;
+        }
+    </style>
+</head>
+<body>
+    <!-- <button class="enterFullscreenBtn">Fullscreen</button> -->
+    <div id="videoContainer">
+        <!-- 비디오를 표시할 영역 -->
+        <input type="hidden" name="next_page" value="/main4">
+        <!-- <p>Next Page: /main4</p> -->
+        <!-- {% if user.is_authenticated %} -->
+            <!-- <h3>Welcome, {{ user.username }}</h3> -->
+            <div style="display: flex; justify-content: center;">
+                <video id="myVideo" autoplay>
+                    <source src="{% static '/video/final_output.mp4' %}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div id="videoControls">
+                <button id="popupButton" style="background: none; border: none; cursor: pointer;">
+                    <img id="persistentButton" src="{% static '/img/video/back.png' %}">
+                </button>
+            </div>
+            <div id="drawControls">
+                <!-- <img id="persistentButton" src="{% static '/img/video/back.png' %}" style="width: 50px; height: 50px;"> -->
+            </div>
+        {% else %}
+            <h3><a href="{% url 'accounts:signup' %}">회원가입</a></h3>
+            <h3><a href="{% url 'accounts:login' %}">로그인</a></h3>
+        {% endif %}
+    </div>
+
+    <!-- 모달창 -->
+    <div id="modalContainer" style="display: none;">
+        <button class="modal-exitButton" id="modalExitButton"></button>
+        <button class="modal-cancelButton" id="modalCancelButton"></button>
+    </div>
+
+    <script>
+        window.onload = function() {
+            var video = document.getElementById("myVideo");
+
+            // 비디오가 로드되면 자동으로 재생합니다.
+            video.addEventListener('loadedmetadata', function() {
+                video.play();
+            });
+
+            // 비디오가 재생이 시작되면 실행됩니다.
+            video.addEventListener('play', function() {
+                setupModalEventListeners();
+            });
+
+            //비디오 종료시 버튼 추가
+            video.addEventListener('ended', function() {
+                var existingButton = document.getElementById("imageButton");
+                if (!existingButton) { // 이미지 버튼이 없으면 새로 추가
+                    addImageButton();
+                }
+            });
+            
+            /*
+            // 비디오의 특정 지점에서 버튼을 추가합니다.
+            video.addEventListener('timeupdate', function() {
+                var currentTime = video.currentTime;
+                // 원하는 지점에서 이미지 버튼 추가
+                if (currentTime > 5 && currentTime < 5.4) { // 예: 비디오 재생 시간 5초에서 10초 사이
+                    var existingButton = document.getElementById("imageButton");
+                    if (!existingButton) { // 이미지 버튼이 없으면 새로 추가
+                        addImageButton();
+                    }
+                }
+            });
+            */
+            
+            // 이미지 버튼을 추가하는 함수
+            function addImageButton() {
+                var existingButton = document.getElementById("imageButton");
+                if (!existingButton) { // 이미지 버튼이 없으면 새로 추가
+                    var drawControls = document.getElementById("drawControls");
+                    var imageButton = document.createElement("img");
+                    imageButton.src = "{% static '/img/video/draw.png' %}";
+                    imageButton.style.width = "200px";
+                    imageButton.style.height = "80px";
+                    imageButton.id = "imageButton";
+
+                    imageButton.addEventListener('click', function() {
+                        var next_page = document.querySelector('input[name="next_page"]').value;
+                        // form 엘리먼트 생성
+                        var form = document.createElement('form');
+                        form.method = 'post';
+                        form.action = '/image/';
+
+                        // hidden input 엘리먼트 생성하고 값을 설정
+                        var next_page_input = document.createElement('input');
+                        next_page_input.type = 'hidden';
+                        next_page_input.name = 'next_page';
+                        next_page_input.value = next_page;
+
+                        // CSRF 토큰을 설정
+                        var csrftoken_input = document.createElement('input');
+                        csrftoken_input.type = 'hidden';
+                        csrftoken_input.name = 'csrfmiddlewaretoken';
+                        csrftoken_input.value = getCookie('csrftoken');
+
+                        // form에 hidden input 추가
+                        form.appendChild(next_page_input);
+                        form.appendChild(csrftoken_input);
+
+                        // body에 form 추가하고 submit
+                        document.body.appendChild(form);
+                        form.submit();
+                    });
+                    drawControls.appendChild(imageButton);
+            }}
+
+            // CSRF 토큰을 가져오는 함수
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        // 이름이 일치하는 쿠키를 찾음
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            
+            function setupModalEventListeners() {
+                var modalExitButton = document.getElementById("modalExitButton");
+                var modalCancelButton = document.getElementById("modalCancelButton");
+                var modalContainer = document.getElementById("modalContainer");
+
+                // 버튼 클릭 이벤트 리스너
+                document.getElementById('popupButton').addEventListener('click', function () {
+                    if (!video.paused) { // 비디오가 재생 중인지 확인
+                        video.pause();
+                        modalContainer.style.display = "flex";
+                    }
+                });
+
+                // ExitButton과 CancelButton에 대한 클릭 이벤트 처리
+                modalExitButton.addEventListener('click', function() {
+                    window.location.href = '/start';
+                });
+
+                modalCancelButton.addEventListener('click', function () {
+                    modalContainer.style.display = "none";
+                    video.play();
+                });
+            }
+        };
+    </script>
+</body>
+</html>

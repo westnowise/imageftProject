@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Image</title>
+    <style>
+        body, html {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            position: relative; /* 부모 요소로 설정 */
+            justify-content: center; /* 가로 중앙 정렬 */
+            align-items: center; /* 세로 중앙 정렬 */
+        }
+
+        #buttonContainer {
+            position: absolute;
+            bottom: 5%; /* 로딩 화면 중앙에 배치 */
+            right: 5%; /* 로딩 화면 중앙에 배치 */
+            {% comment %} top: 600px; /* 원하는 위치로 조정 */
+            right: 20px; /* 원하는 위치로 조정 */ {% endcomment %}
+            display: flex;
+            align-items: center;
+        }
+
+        #buttonContainer img {
+            margin-left: 10px; /* 버튼 사이 간격 조정 */
+            cursor: pointer;
+        }
+
+        .loading_circle {
+            width: 75px; /* 현재 크기의 1.5배 */
+            height: 75px; /* 현재 크기의 1.5배 */
+            margin: 10px auto;
+
+            border: 15px solid #e3e3e3; /* 현재 크기의 1.5배 */
+            border-bottom: 15px solid #F6CD00; /* 현재 크기의 1.5배 */
+            border-radius: 50%;
+
+            animation: load 1.5s linear infinite;
+        }
+
+        .loading_container {
+            position: absolute;
+            top: 50%; /* 로딩 화면 중앙에 배치 */
+            left: 50%; /* 로딩 화면 중앙에 배치 */
+            transform: translate(-50%, -50%); /* 가운데 정렬 */
+            text-align: center; /* 텍스트 가운데 정렬 */
+        }
+        
+
+        .loading_text {
+            font-size: 40px;
+            font-weight: bold; /* 텍스트를 굵게 설정 */
+            color: #F6CD00; /* 텍스트 색상 지정 */
+            position: absolute;
+            top: 110px; /* 로고 위로 텍스트 이동 */
+            left: 50%; /* 가운데 정렬 */
+            transform: translate(-50%, -50%); /* 가운데 정렬 */
+            white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
+        }
+
+        @keyframes load {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 로딩 화면 -->
+    <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); z-index: 9999;">
+        <div class="loading_container">
+            <div class="loading_circle"></div>
+            <p class="loading_text">동화 나라로 돌아가는 중~~!</p>
+        </div>
+    </div>
+    
+
+    <!-- 이미지 표시 -->
+    {% comment %} <p>Next Page: {{ next_page }}</p> {% endcomment %}
+    <div id="jsonResponse"></div>
+    <img id="savedImage" src="data:image/png;base64,{{ encoded_string }}" alt="Saved Image" style="width: 80%; display: block; margin: 0 auto; margin-top: 0;">
+    
+    <div id="buttonContainer">
+        <!-- 다시그리기 버튼 -->
+        <form id="aginaForm" method="POST" action="{% url 'image' %}">
+            {% csrf_token %}
+            <input type="hidden" name="next_page" id="next_page" value="{{ next_page }}">
+            <img src="{% static 'ft/img/button1.png' %}" alt="다시그리기" onclick="submitForm('aginaForm');" style="width: 200px;">
+        </form>
+        <form id="saveForm" method="POST" action="{% url 'save_image' %}">
+            {% csrf_token %}
+            <!-- 숨겨진 입력 필드 -->
+            <input type="hidden" name="image_data" id="image_data">
+            <input type="hidden" name="next_page" value="{{ next_page }}">
+            <!-- <button type="submit" onclick="copyImageData()">Save Image</button> -->
+            <img src="{% static 'ft/img/button2.png' %}" alt="Save Image" onclick="copyImageData();" style="width: 200px;">
+        </form>
+    </div>
+
+<script>
+    // 이전 페이지로 돌아가는 폼을 제출하는 함수
+    function submitForm(formId) {
+        var nextPageValue = document.getElementById("next_page").value; // next_page 값을 가져옴
+        document.getElementById(formId).submit(); // 폼 제출
+    }
+    function copyImageData() {
+        document.getElementById('loadingOverlay').style.display = 'block';
+        // 이미지 태그에서 Base64 인코딩된 이미지 데이터를 가져옴
+        var imageData = document.getElementById('savedImage').src;
+        // 숨겨진 입력 필드에 이미지 데이터를 설정
+        document.getElementById('image_data').value = imageData;
+        // form을 제출
+        document.getElementById('saveForm').submit();
+    }
+    document.getElementById('saveForm').addEventListener('submit', function() {
+        // 로딩 화면 숨김
+        document.getElementById('loadingOverlay').style.display = 'none';
+    });
+</script>
+</body>
+</html>

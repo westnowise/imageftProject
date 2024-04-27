@@ -1,0 +1,106 @@
+<!-- game_page.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Video Streaming</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* 페이지 스크롤 제거 */
+        }
+
+        #videoContainer {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* 비디오 컨테이너 내부의 요소들이 넘치지 않도록 설정 */
+        }
+
+        #videoContainer img {
+            min-width: 100%;
+            min-height: 100%;
+            {% comment %} object-fit: cover; /* 이미지가 비디오 컨테이너를 완전히 채우도록 설정 */ {% endcomment %}
+        }
+        
+        .loading_circle {
+            width: 75px; /* 현재 크기의 1.5배 */
+            height: 75px; /* 현재 크기의 1.5배 */
+            margin: 10px auto;
+
+            border: 15px solid #e3e3e3; /* 현재 크기의 1.5배 */
+            border-bottom: 15px solid #F6CD00; /* 현재 크기의 1.5배 */
+            border-radius: 50%;
+
+            animation: load 1.5s linear infinite;
+        }
+
+        .loading_container {
+            position: absolute;
+            top: 50%; /* 로딩 화면 중앙에 배치 */
+            left: 50%; /* 로딩 화면 중앙에 배치 */
+            transform: translate(-50%, -50%); /* 가운데 정렬 */
+            text-align: center; /* 텍스트 가운데 정렬 */
+        }
+        
+
+        .loading_text {
+            font-size: 40px;
+            font-weight: bold; /* 텍스트를 굵게 설정 */
+            color: #F6CD00; /* 텍스트 색상 지정 */
+            position: absolute;
+            top: 110px; /* 로고 위로 텍스트 이동 */
+            left: 50%; /* 가운데 정렬 */
+            transform: translate(-50%, -50%); /* 가운데 정렬 */
+            white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
+        }
+
+        @keyframes load {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            // 주기적으로 카메라 상태 확인을 위한 타이머 ID 저장 변수
+            var checkCameraStatusInterval = setInterval(function(){
+                $.ajax({
+                    url: 'check_camera_status/',
+                    success: function(response) {
+                        if (!response.active) {
+                            // 카메라가 비활성화 상태일 때, 주기적 실행 중단
+                            clearInterval(checkCameraStatusInterval);
+                            $('#loadingOverlay').show();
+                            // /main3 페이지로 리다이렉트
+                            window.location.href = '/main3';
+                        }
+                    }
+                });
+            }, 1000); // 매 1초마다 실행
+        });
+    </script>
+</head>
+<body>
+    <!-- 로딩 화면 -->
+    <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); z-index: 9999;">
+        <div class="loading_container">
+            <div class="loading_circle"></div>
+            <p class="loading_text">동화 나라로 돌아가는 중~~!</p>
+        </div>
+    </div>
+    {% comment %} <img src="{% url 'video_stream' %}" width="auto" height="auto"> <!-- Display streaming video --> {% endcomment %}
+    <div id="videoContainer">
+        <img src="{% url 'video_stream' %}" alt="Streaming video">
+    </div>
+</body>
+</html>

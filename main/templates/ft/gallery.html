@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
+    <title>나의 그림</title>
+    <link rel="stylesheet" href="{% static 'main/css/gallery.css' %}">
+</head>
+<body>
+    <div class="g_left">
+        <button type="button" class="g_arr_left">
+            <img src="{% static '/img/gallery/g_left.png' %}" alt="">
+        </button>
+    </div>
+    <div class="my_img">
+        {% for image in latest_images %}
+        <div class="item">
+            <div class = "db_img">
+                <img src="data:image/png;base64,{{ image.base64_image }}" alt="{{ image.title }}">
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    {% comment %} <div class="my_img">
+        <div class="item">
+            {% for image in latest_images %}
+            {% if forloop.counter == 1 %}
+                <img src="data:image/png;base64,{{ image.base64_image }}" alt="{{ image.title }}">
+            {% endif %}
+        {% endfor %}
+        </div>
+        <div class="item">
+            {% for image in latest_images %}
+            {% if forloop.counter == 2 %}
+                <img src="data:image/png;base64,{{ image.base64_image }}" alt="{{ image.title }}">
+            {% endif %}
+        {% endfor %}
+        </div>
+        <div class="item">
+            {% for image in latest_images %}
+            {% if forloop.counter == 3 %}
+                <img src="data:image/png;base64,{{ image.base64_image }}" alt="{{ image.title }}">
+            {% endif %}
+        {% endfor %}
+          
+        </div>
+        <div class="item">
+            {% for image in latest_images %}
+            {% if forloop.counter == 4 %}
+                <img src="data:image/png;base64,{{ image.base64_image }}" alt="{{ image.title }}">
+            {% endif %}
+        {% endfor %}
+          
+        </div>
+        <div class="item">
+            {% for image in latest_images %}
+            {% if forloop.counter == 5 %}
+                <img src="data:image/png;base64,{{ image.base64_image }}" alt="{{ image.title }}">
+            {% endif %}
+        {% endfor %}
+          
+        </div>
+        <div class="item">
+            {% for image in latest_images %}
+            {% if forloop.counter == 6 %}
+                <img src="data:image/png;base64,{{ image.base64_image }}" alt="{{ image.title }}">
+            {% endif %}
+        {% endfor %}
+          
+        </div>
+        <div class="item">
+            {% for image in latest_images %}
+            {% if forloop.counter == 7 %}
+                <img src="data:image/png;base64,{{ image.base64_image }}" alt="{{ image.title }}">
+            {% endif %}
+        {% endfor %}
+ 
+        </div>
+        <div class="item">
+            {% for image in latest_images %}
+            {% if forloop.counter == 8 %}
+                <img src="data:image/png;base64,{{ image.base64_image }}" alt="{{ image.title }}">
+            {% endif %}
+        {% endfor %}
+
+        </div>
+        
+    </div> {% endcomment %}
+    <div class="bg_line"></div>
+    <div class="bg_bottom"></div>
+</body>
+</html>
+
+    <script src="{% static 'main/js/gallery.js' %}"></script>
+</body>
+</html>
