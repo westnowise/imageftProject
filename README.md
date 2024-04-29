@@ -40,6 +40,9 @@ https://visualstudio.microsoft.com/ko/visual-cpp-build-tools/
     # Needed pip 설치 
     cd /Dproject
     python manage.py runserver
+    # DB 설정
+    python manage.py makemigrations
+    python manage.py migrate
 
 
 
