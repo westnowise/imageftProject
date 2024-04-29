@@ -35,11 +35,13 @@ https://visualstudio.microsoft.com/ko/visual-cpp-build-tools/
 
 
 
-### R는 루트 /*
-    python manage.py runserver
+### Running
+    cd */ manage.py가 위치한 루트 */
     # DB 설정
     python manage.py makemigrations
     python manage.py migrate
+    # localhost 실행
+    python manage.py runserver
 
 
 
