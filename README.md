@@ -14,6 +14,7 @@
     python 3.11.7 # 3.6 이상 3.10 이하 버전
     pip install -r requirements.txt
     pip install pydub simpleaudio # 오류 발생 가능
+    pip install moviepy
 
 pip install pydub 오류 발생 시
 1) Microsoft Visual C++ Build Tools 설치
