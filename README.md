@@ -27,9 +27,10 @@ https://visualstudio.microsoft.com/ko/visual-cpp-build-tools/
    - ffmpeg 설치 [https%3A%2F%2Fkminito.tistory.com%2F108](https://kminito.tistory.com/108)
   
     echo %SDL_AUDIODRIVER%     # CMD
-    set SDL_AUDIODRIVER= (편집됨)
 
-3) 재부팅 후 pip install pydub 재실행
+    set SDL_AUDIODRIVER=\
+
+4) 재부팅 후 pip install pydub 재실행
 
 
 
