@@ -11,7 +11,7 @@
 
 ## 🔖 Guide
 ### Needed
-    python 3.11.7 # 7 이상 버전
+    python 3.11.7 # 3.6 이상 3.10 이하 버전
     pip install -r requirements.txt
     pip install pydub simpleaudio # 오류 발생 가능
 
