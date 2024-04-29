@@ -24,7 +24,7 @@ https://visualstudio.microsoft.com/ko/visual-cpp-build-tools/
 
 
 2) ffmpeg 환경변수 설정
-   - ffmpeg 설치 https%3A%2F%2Fkminito.tistory.com%2F108
+   - ffmpeg 설치 [https%3A%2F%2Fkminito.tistory.com%2F108](https://kminito.tistory.com/108)
   
     echo %SDL_AUDIODRIVER%     # CMD
     set SDL_AUDIODRIVER= (편집됨)
